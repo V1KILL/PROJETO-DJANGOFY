@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+body {
+    background-color: #121212;
+}
+
+div.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    justify-content: space-between;
+}
+
+header p {
+    color: white;
+    font-size: 1.9em;
+    font-variant: small-caps;
+    font-weight: 600;
+}
+
+header .perfil {
+    position: relative;
+}
+
+header .perfil p {
+    color: white;
+    font-size: 1.2em;
+    font-variant: normal;
+}
+header .perfil .perfil-options {
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    right: 60%;
+    padding: 5px 25px;
+    gap: 5px;
+    border-radius: 9px;
+    background-color: #5EC181;
+}
+
+header .perfil-image {
+    width: 50px;
+    height: 50px;
+}
+
+header .perfil-image img {
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    border-radius: 50%;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    gap: 250px;
+    padding: 20px;
+}
+
+article {
+    display: flex;
+    
+    flex-direction: column;
+    gap: 20px;
+    background-color: #121212;
+}
+
+article p {
+    color: white;
+    font-weight: 500;
+    font-size: 1.4em;
+}
+article .videos {
+    display: flex;
+    gap: 20px;
+}
+article .video {
+    display: flex;
+    position: relative;
+    width: 250px;
+    height: 450px;
+}
+
+article .video img {
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    border-radius: 24px;
+}
+
+.lock-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lock-overlay i {
+    color: white;
+    font-size: 46px;
+}
