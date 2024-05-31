@@ -1,121 +1,55 @@
 * {
-    padding: 0;
-    margin: 0;
+    padding: 0px;
+    margin: 0px;
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
+    background-color: #1B1B22;
     width: 100%;
     height: 100%;
-    background-color: #121212;
 }
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px;
+    background-color: #32353F;
+    padding: 24px;
 }
 
 header p {
     color: white;
-    font-weight: 600;
-    font-size: 1.6em;
-}
-
-header div {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-}
-
-header div img {
-    width: 100%;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 50%;
-}
-
-section {
-    padding: 16px;
-}
-
-.swiper {
-    width: 100%;
-    height: 500px;
-    padding: 16px;
-}
-
-.swiper p {
-    color: white;
-    padding-top: 16px;
-    padding-bottom: 16px;
     font-size: 1.4em;
-    font-weight: 600;
+    font-weight: 700;
 }
 
-.swiper-slide {
-    height: 500px;
-    position: relative;
-}
-
-.swiper-button-next, .swiper-button-prev, .swiper-scrollbar,.swiper-pagination {
-    color: white !important;
-}
-
-.swiper-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
-
-.swiper-slide div.overlay {
-    position: absolute;
+header .perfil {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    transition: 0.4s;
+    gap: 12px;
 }
 
-.swiper-slide div.overlay i {
+header .perfil a {
+    padding: 12px;
     color: white;
-    font-size: 46px;
-    transition: 0.4s;
-    transform: translateY(-50%);
-}
-
-.swiper-slide div.overlay span {
-    text-align: center;
-    color: white;
-    position: absolute;
     font-weight: 600;
-    font-size: 16px;
-    transition: 0.4s;
-    opacity: 0;
-    transform: translateY(200px);
+    text-decoration: none;
+    background-color: #19C37D;
 }
 
-.swiper-slide:hover div.overlay span {
-    opacity: 1;
-    transform: translateY(60%);
+header .perfil .perfil-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
 }
 
-.swiper-slide:hover div.overlay i {
-    opacity: 1;
-    transform: translateY(-70%);
+header .perfil .perfil-image img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
 }
-
-.swiper-slide:hover div.overlay {
-    background-color: rgba(0, 0, 0, 0.6);
-}
-
