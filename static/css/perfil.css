@@ -66,6 +66,7 @@ section {
     justify-content: center;
     align-items: center;
     gap: 40px;
+    padding: 20px;
     width: 100%;
 }
 
@@ -103,9 +104,11 @@ form label {
 
 form input {
     background-color: transparent;
-    border: 1px solid white;
+    border: 2px solid #A3A3A3;
     outline: none;
+    color: white;
     padding: 6px;
+    border-radius: 8px;
 }
 
 form button {
@@ -114,4 +117,6 @@ form button {
     font-weight: 600;
     font-size: 1em;
     padding: 12px;
+    border: 0px;
+    border-radius: 8px;
 }
