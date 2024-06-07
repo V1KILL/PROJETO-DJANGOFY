@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/css/videopage.css">
+    <script src="https://kit.fontawesome.com/c99caadda1.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <p>Djangofy</p>
+        <div class="perfil">
+            <div class="perfil-image">
+                <img src="../static/img/1708190589974.jpg" alt="">
+                <div class="options">
+                    <p>Perfil</p>
+                    <p>Sair</p>
+                </div>
+            </div>
+            <a href="">Premium</a>
+        </div>
+    </header>
+    <section>
+        <div class="mainvideo">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/QD0Wlsm_Sdk?si=e-xwm1f9XX49Ylhq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <div class="mainvideotext">
+                <p>Melhore Seu Inglês 369x</p>
+                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, ad dignissimos. Officia obcaecati blanditiis incidunt eaque debitis et quas, porro dicta vero delectus error exercitationem deleniti, dignissimos excepturi dolore eius.</span>
+            </div>
+            <div class="buttons">
+                <a href="" class="check">Marcado</a>
+                <a href="" class="like"><i class="fa-regular fa-heart"></i>Like</a>
+                <span><a class="fa-solid fa-arrow-left"></a><a class="fa-solid fa-arrow-right"></a></span>
+            </div>
+        </div>
+        
+        <div class="comentario">
+            <p id="comentarios"> Comentários ( 2 )</p>
+            
+            <div id="comentario">
+                <div id="perfil">
+                    <img src="../static/img/1708190589974.jpg" alt="">         
+                </div>
+                <div id="descricao">
+                    <a href="{% url 'profile' comment.user.user.id %}">Viktor Amaral</a>
+                    <p>Bom Vídeo</p>
+                    <div id="subcomentario">
+                        <div id="perfil">
+                            <img src="../static/img/1708190589974.jpg" alt="">         
+                        </div>
+                        <div id="descricao">
+                            <a href="{% url 'profile' comment.user.user.id %}">Viktor Amaral</a>
+                            <p>Bom Vídeo</p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div id="comentario">
+                <div id="perfil">
+                    <img src="../static/img/1708190589974.jpg" alt="">         
+                </div>
+                <div id="descricao">
+                    <a href="{% url 'profile' comment.user.user.id %}">Viktor Amaral</a>
+                    <p>Bom Vídeo</p>
+                    <div id="subcomentario">
+                        <div id="perfil">
+                            <img src="../static/img/1708190589974.jpg" alt="">         
+                        </div>
+                        <div id="descricao">
+                            <a href="{% url 'profile' comment.user.user.id %}">Viktor Amaral</a>
+                            <p>Bom Vídeo</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="videos">
+            <div class="video">
+                <div class="videoimage">
+                    <img src="../static/img/bg.jfif" alt="">
+                </div>
+                <p class="level">Básico</p>
+                <p class="videotitle">02 - Present Perfect</p>
+            </div>
+            <div class="video">
+                <div class="videoimage">
+                    <img src="../static/img/bg.jfif" alt="">
+                </div>
+                <p class="level">Básico</p>
+                <p class="videotitle">02 - Present Perfect</p>
+            </div>
+            <div class="video">
+                <div class="videoimage">
+                    <img src="../static/img/bg.jfif" alt="">
+                </div>
+                
+                <p class="level">Básico</p>
+                <p class="videotitle">02 - Present Perfect</p>
+            </div>
+        </div>
+    </section>
+    <script>
+        document.getElementById('youtube-iframe').onload = function() {
+            var iframe = this.contentWindow.document;
+            setTimeout(function() {
+                var aTags = iframe.getElementsByTagName('a');
+                for (var i = 0; i < aTags.length; i++) {
+                    aTags[i].style.pointerEvents = 'none';
+                }
+            }, 1000); // espera 1 segundo para garantir que todos os elementos estejam carregados
+        };
+    </script>
+</body>
+</html>

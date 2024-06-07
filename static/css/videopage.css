@@ -1,0 +1,269 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+}
+
+body {
+    background-color:  #0F0F0F;
+    width: 100%;
+    height: 100%;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0F0F0F;
+    padding: 24px;
+}
+
+header p {
+    color: white;
+    font-size: 1.4em;
+    font-weight: 700;
+}
+
+header .perfil {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+header .perfil a {
+    padding: 12px;
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    background-color:  #44B78B;
+    border-radius: 8px;
+    transition: 0.4s;
+}
+
+header .perfil a:hover {
+    color: #3F3F3F;
+    background-color:  white;
+}
+
+header .perfil .perfil-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    position: relative;
+}
+
+header .perfil .perfil-image img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+}
+
+header .perfil .perfil-image .options {
+    display: none;
+    flex-direction: column;
+    background-color: black;
+    position: absolute;
+    width: 150px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    top: 25px;
+    right: 20px;
+}
+
+header .perfil .perfil-image .options p {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.mainvideo {
+    width: 100%;
+}
+
+.mainvideotext {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-left: 30px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.mainvideotext p {
+    color: white;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.mainvideotext span {
+    border-radius: 16px;
+    font-weight: 500;
+    color: white;
+    padding: 12px;
+    background-color: #3F3F3F;
+}
+
+iframe {
+    width: 100%;
+}
+
+.videos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    background-color: #0F0F0F;
+}
+
+.video {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+    padding: 20px;
+    width: 100%;
+    transition: 0.4s;
+}
+
+.video:hover {
+    background-color: #3F3F3F;
+    cursor: pointer;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    padding-left: 30px;
+    padding-bottom: 10px;
+}
+
+.buttons a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: white;
+    padding: 12px;
+    font-weight: 600;
+    border-radius: 16px;
+}
+
+.buttons span {
+    display: flex;
+    gap: 8px;
+}
+
+.buttons span a {
+    background-color: #3F3F3F;
+    padding: 12px;
+
+}
+
+.buttons .like {
+    background-color: #3F3F3F;
+}
+
+.buttons .check {
+    background-color: #3F3F3F;
+}
+
+.video .level {
+    align-self: flex-start;
+    color: #BABBBB;
+    font-weight: 500;
+    padding-left: 10px;
+}
+
+.video .videotitle {
+    align-self: flex-start;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    padding-left: 10px;
+}
+
+.videoimage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 430px;
+    padding-bottom: 5px;
+}
+
+.videoimage img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 16px;
+}
+
+div.comentario {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-left: 30px;
+    padding-top: 30px;
+    gap: 20px;
+}
+
+div.comentario p#comentarios {
+    user-select: none;
+    font-weight: 600;
+    color: white;
+}
+
+div.comentario div#comentario {
+    display: flex;
+    gap: 20px;
+    padding-bottom: 20px;
+}
+
+div.comentario div#comentario div#perfil img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+}
+
+div.comentario div#comentario div#descricao {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-weight: 300;
+    color: white;
+}
+
+div.comentario div#comentario div#descricao a {
+    font-weight: 500;
+    text-decoration: none;
+    color: white;
+    transition: 0.3s ease;
+}
+
+div.comentario div#comentario div#descricao #subcomentario {
+    display: flex;
+    padding-top: 10px;
+    gap: 10px;
+    font-weight: 300;
+    color: white;
+}
