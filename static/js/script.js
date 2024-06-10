@@ -8,5 +8,10 @@ perfil.addEventListener('click', function() {
   } else {
     options.style.display = 'flex';
   }
-  
 });
+
+var module = document.querySelector('.module')
+
+module.addEventListener('click', function(){
+    
+})

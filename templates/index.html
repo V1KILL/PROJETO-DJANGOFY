@@ -24,47 +24,25 @@
     </header>
     <section>
         <article>
-            <p class="module-text">Iniciante</p>
+            {% for module in modules %}
+            <p class="module-text">{{module.topic.title}}</p>
             <div class="modules">
                 <div class="module">
                     <div class="module-image">
-                        <img src="../static/img/bg.jfif" alt="">
-                    </div>
-                    <p class="module-title">Como as peças se movem</p>
-                    <p class="module-description">Conheça as peças de xadrez e como preparar o tabuleiro</p>
-                    <p class="chess">Chess.com Team</p>
-                    <div class="details">
-                        <div class="detail">
-                            <i class="fa-solid fa-user-graduate"></i>
-                            <p>8 aulas</p>
-                        </div>
-                        <div class="detail">
-                            <i class="fa-solid fa-calendar-days"></i>
-                            <p>22/02/2024</p>
-                        </div>
-                        <div class="detail">
-                            <i class="fa-solid fa-clock"></i>
-                            <p>8 horas</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <p class="module-text">Intermediário</p>
-            <div class="modules">
-                <div class="module">
-                    <div class="module-image" id="locked">
-                        <img src="../static/img/bg.jfif" alt="">
+                        <img src="{{module.image.url}}" alt="">
                         <div class="overlay"></div>
-                        <i class="fa-solid fa-lock"></i>
-                        <p>Conteúdo Premium</p>
+                        {% if module.status %}
+                            <i class="fa-solid fa-lock"></i>
+                            <p>Conteúdo Premium</p>
+                        {% endif %}
                     </div>
-                    <p class="module-title">Como as peças se movem</p>
-                    <p class="module-description">Conheça as peças de xadrez e como preparar o tabuleiro</p>
+                    <p class="module-title">{{module.title}}</p>
+                    <p class="module-description">{{module.description}}</p>
                     <p class="chess">Chess.com Team</p>
                     <div class="details">
                         <div class="detail">
                             <i class="fa-solid fa-user-graduate"></i>
-                            <p>8 aulas</p>
+                            <p>{{module.videos.count}} Aulas</p>
                         </div>
                         <div class="detail">
                             <i class="fa-solid fa-calendar-days"></i>
@@ -77,34 +55,8 @@
                     </div>
                 </div>
             </div>
-            <p class="module-text">Avançado</p>
-            <div class="modules">
-                <div class="module">
-                    <div class="module-image" id="locked">
-                        <img src="../static/img/bg.jfif" alt="">
-                        <div class="overlay"></div>
-                        <i class="fa-solid fa-lock"></i>
-                        <p>Conteúdo Premium</p>
-                    </div>
-                    <p class="module-title">Como as peças se movem</p>
-                    <p class="module-description">Conheça as peças de xadrez e como preparar o tabuleiro</p>
-                    <p class="chess">Chess.com Team</p>
-                    <div class="details">
-                        <div class="detail">
-                            <i class="fa-solid fa-user-graduate"></i>
-                            <p>8 aulas</p>
-                        </div>
-                        <div class="detail">
-                            <i class="fa-solid fa-calendar-days"></i>
-                            <p>22/02/2024</p>
-                        </div>
-                        <div class="detail">
-                            <i class="fa-solid fa-clock"></i>
-                            <p>8 horas</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
+            {% endfor %}
         </article>
     </section>
     <script src="../static/js/script.js"></script>
