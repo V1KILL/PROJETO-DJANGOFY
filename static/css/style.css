@@ -22,7 +22,7 @@ header {
     padding: 24px;
 }
 
-header p {
+header a#logo {
     color: white;
     font-size: 1.4em;
     font-weight: 700;
@@ -79,7 +79,7 @@ header .perfil .perfil-image .options {
     right: 20px;
 }
 
-header .perfil .perfil-image .options p {
+header .perfil .perfil-image .options a {
     font-size: 20px;
     font-weight: 600;
 }

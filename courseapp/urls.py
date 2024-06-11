@@ -1,9 +1,10 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import Home
+from .views import Home, Perfil
 urlpatterns = [
-    path('', Home, name='home')
+    path('', Home, name='home'),
+    path('perfil', Perfil, name='perfil')
     
 ]
 

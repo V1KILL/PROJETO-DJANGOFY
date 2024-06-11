@@ -11,4 +11,5 @@ def Home(request):
     }
     return render(request, 'index.html', content)
 
-
+def Perfil(request):
+    return render(request, 'perfil.html') 
