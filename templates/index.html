@@ -24,10 +24,11 @@
     </header>
     <section>
         <article>
+            {% csrf_token %}
             {% for module in modules %}
             <p class="module-text">{{module.topic.title}}</p>
             <div class="modules">
-                <div class="module">
+                <div class="module" data-id='{{ module.id }}'>
                     <div class="module-image">
                         <img src="{{module.image.url}}" alt="">
                         <div class="overlay"></div>

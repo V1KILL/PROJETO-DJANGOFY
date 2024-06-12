@@ -23,9 +23,11 @@
         </div>
     </header>
     <section>
+        <p style="color: white;">{{module.title}}</p>
         <div class="mainvideo">
             <iframe width="560" height="315" src="https://www.youtube.com/embed/QD0Wlsm_Sdk?si=e-xwm1f9XX49Ylhq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             <div class="mainvideotext">
+                <p>{{module.title}}</p>
                 <p>Melhore Seu Inglês 369x</p>
                 <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, ad dignissimos. Officia obcaecati blanditiis incidunt eaque debitis et quas, porro dicta vero delectus error exercitationem deleniti, dignissimos excepturi dolore eius.</span>
             </div>
@@ -44,14 +46,14 @@
                     <img src="../static/img/1708190589974.jpg" alt="">         
                 </div>
                 <div id="descricao">
-                    <a href="{% url 'profile' comment.user.user.id %}">Viktor Amaral</a>
+                    <a href="">Viktor Amaral</a>
                     <p>Bom Vídeo</p>
                     <div id="subcomentario">
                         <div id="perfil">
                             <img src="../static/img/1708190589974.jpg" alt="">         
                         </div>
                         <div id="descricao">
-                            <a href="{% url 'profile' comment.user.user.id %}">Viktor Amaral</a>
+                            <a href="">Viktor Amaral</a>
                             <p>Bom Vídeo</p>
                         </div>
                     </div>
@@ -63,14 +65,14 @@
                     <img src="../static/img/1708190589974.jpg" alt="">         
                 </div>
                 <div id="descricao">
-                    <a href="{% url 'profile' comment.user.user.id %}">Viktor Amaral</a>
+                    <a href="">Viktor Amaral</a>
                     <p>Bom Vídeo</p>
                     <div id="subcomentario">
                         <div id="perfil">
                             <img src="../static/img/1708190589974.jpg" alt="">         
                         </div>
                         <div id="descricao">
-                            <a href="{% url 'profile' comment.user.user.id %}">Viktor Amaral</a>
+                            <a href="">Viktor Amaral</a>
                             <p>Bom Vídeo</p>
                         </div>
                     </div>
@@ -103,15 +105,7 @@
         </div>
     </section>
     <script>
-        document.getElementById('youtube-iframe').onload = function() {
-            var iframe = this.contentWindow.document;
-            setTimeout(function() {
-                var aTags = iframe.getElementsByTagName('a');
-                for (var i = 0; i < aTags.length; i++) {
-                    aTags[i].style.pointerEvents = 'none';
-                }
-            }, 1000); // espera 1 segundo para garantir que todos os elementos estejam carregados
-        };
+        
     </script>
 </body>
 </html>
