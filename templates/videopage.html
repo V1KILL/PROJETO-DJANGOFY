@@ -23,13 +23,12 @@
         </div>
     </header>
     <section>
-        <p style="color: white;">{{module.title}}</p>
         <div class="mainvideo">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/QD0Wlsm_Sdk?si=e-xwm1f9XX49Ylhq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            {{mainvideo.url|safe}}
             <div class="mainvideotext">
-                <p>{{module.title}}</p>
-                <p>Melhore Seu Inglês 369x</p>
-                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, ad dignissimos. Officia obcaecati blanditiis incidunt eaque debitis et quas, porro dicta vero delectus error exercitationem deleniti, dignissimos excepturi dolore eius.</span>
+                <p>{{mainvideo.title}}</p>
+                
+                <span>{{mainvideo.description}}</span>
             </div>
             <div class="buttons">
                 <a href="" class="check">Marcado</a>

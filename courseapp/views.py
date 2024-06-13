@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
 from courseapp.models import Topic, Module
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+import json
 
 def Home(request):
     topics = Topic.objects.all()
@@ -13,10 +16,16 @@ def Home(request):
 def Perfil(request):
     return render(request, 'perfil.html')
 
+@csrf_exempt
 def render_module(request):
     if request.method == 'POST':
-        id = request.POST.get('moduleId')
-        
-        module = Module.objects.get(id=id)
-        return render(request, 'videopage.html',{'module':module})
-    return render(request, 'index.html')
+        data = json.loads(request.body.decode('utf-8'))
+        module_id = data.get('moduleId')
+        print('Module ID recebido:', module_id)  # Verifica no console do servidor Django
+
+    
+        module = Module.objects.get(id=module_id)
+        mainvideo = module.videos.first()
+        return render(request, 'videopage.html', {'module': module, 'mainvideo':mainvideo})
+    else:
+        return JsonResponse({'error': 'Método não permitido'}, status=405)

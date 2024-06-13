@@ -5,7 +5,7 @@ from .views import Home, Perfil, render_module
 urlpatterns = [
     path('', Home, name='home'),
     path('perfil', Perfil, name='perfil'),
-    path('module', render_module, name='module'),
+    path('module/', render_module, name='module'),
     
 ]
 

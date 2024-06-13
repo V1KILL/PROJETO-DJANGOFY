@@ -9,31 +9,39 @@ perfil.addEventListener('click', function() {
     options.style.display = 'flex';
   }
 });
-var module = document.querySelector('.module')
-module.addEventListener('click', function(){
-  var csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
-  var moduleId = module.getAttribute('data-id');
-  console.log('estou recbend', moduleId)
-  
-  var requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRFToken': csrfToken,
-    },
-    body: JSON.stringify({moduleId: moduleId})
-  }
-  fetch('/module', requestOptions)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Error Then')
-      }
-      
-    })
-    .catch(error => {
-      console.error('erro meu amigo', error)
-    })
-})
+document.querySelectorAll('.module').forEach(module => {
+  module.addEventListener('click', function() {
+    var moduleId = this.dataset.id; // Obtém o ID do módulo a partir do atributo data-id
+    var csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
+
+    var requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken,
+      },
+      body: JSON.stringify({ moduleId: moduleId })
+    };
+
+    fetch('/module/', requestOptions) // Certifique-se de que este é o endpoint correto
+      .then(response => {
+        if (response.ok) {
+          return response.text(); // Obtém o HTML da resposta
+        } else {
+          throw new Error('Erro ao carregar módulo');
+        }
+      })
+      .then(html => {
+        console.log(html); // Logar a resposta HTML para verificação
+        document.open();
+        document.write(html);
+        document.close();
+      })
+      .catch(error => {
+        console.error('erro meu amigo', error);
+      });
+  });
+});
 
 var logo = document.getElementById('logo')
 logo.addEventListener('click', function () {
