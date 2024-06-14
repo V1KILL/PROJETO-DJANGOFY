@@ -38,12 +38,16 @@ class Video(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     module = models.ForeignKey('Module', on_delete=models.CASCADE, related_name='videos')
 
+    def __str__(self):
+        return self.title
+
 class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey('UserProfile', on_delete=models.CASCADE, related_name='comments')
     date = models.DateTimeField(auto_now_add=True)
-    response = models.ForeignKey(User, on_delete=models.CASCADE, related_name='responses', null=True, blank=True)
+    response = models.ForeignKey('self', on_delete=models.CASCADE, related_name='responses', null=True, blank=True)
+    text = models.TextField()
     video = models.ForeignKey('Video', on_delete=models.CASCADE, related_name='comments')
-    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='replies')
+    
 
     def __str__(self):
         return f'Comment by {self.user} on {self.date}'

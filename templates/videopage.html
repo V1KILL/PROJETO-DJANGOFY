@@ -38,45 +38,32 @@
         </div>
         
         <div class="comentario">
-            <p id="comentarios"> Comentários ( 2 )</p>
-            
-            <div id="comentario">
-                <div id="perfil">
-                    <img src="../static/img/1708190589974.jpg" alt="">         
-                </div>
-                <div id="descricao">
-                    <a href="">Viktor Amaral</a>
-                    <p>Bom Vídeo</p>
-                    <div id="subcomentario">
+            <p id="comentarios">Comentários ({{comments.count}})</p>
+            {% for comment in comments %}
+                {% if not comment.response %}
+                    <div id="comentario">
                         <div id="perfil">
-                            <img src="../static/img/1708190589974.jpg" alt="">         
+                            <img src="{{ comment.user.profileimg.url }}" alt="Profile Picture">
                         </div>
                         <div id="descricao">
-                            <a href="">Viktor Amaral</a>
-                            <p>Bom Vídeo</p>
+                            <a href="#">{{ comment.user.user.username }}</a>
+                            <p>{{ comment.text }}</p>
+                            <!-- Respostas -->
+                            {% for response in comment.responses.all %}
+                                <div id="subcomentario">
+                                    <div id="perfil">
+                                        <img src="{{ response.user.profileimg.url }}" alt="Profile Picture">
+                                    </div>
+                                    <div id="descricao">
+                                        <a href="#">{{ response.user.user.username }}</a>
+                                        <p>{{ response.text }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
-                </div>
-                
-            </div>
-            <div id="comentario">
-                <div id="perfil">
-                    <img src="../static/img/1708190589974.jpg" alt="">         
-                </div>
-                <div id="descricao">
-                    <a href="">Viktor Amaral</a>
-                    <p>Bom Vídeo</p>
-                    <div id="subcomentario">
-                        <div id="perfil">
-                            <img src="../static/img/1708190589974.jpg" alt="">         
-                        </div>
-                        <div id="descricao">
-                            <a href="">Viktor Amaral</a>
-                            <p>Bom Vídeo</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                {% endif %}
+            {% endfor %}
         </div>
         <div class="videos">
             <div class="video">
