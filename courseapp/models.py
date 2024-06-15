@@ -37,6 +37,7 @@ class Video(models.Model):
     status = models.BooleanField(default=False)
     date = models.DateTimeField(auto_now_add=True)
     module = models.ForeignKey('Module', on_delete=models.CASCADE, related_name='videos')
+    image = models.ImageField(upload_to='module/',default='1708190589974.jpg')
 
     def __str__(self):
         return self.title
@@ -50,4 +51,4 @@ class Comment(models.Model):
     
 
     def __str__(self):
-        return f'Comment by {self.user} on {self.date}'
+        return f'Comentário de {self.user.user.username}'

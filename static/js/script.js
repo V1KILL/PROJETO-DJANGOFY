@@ -9,9 +9,11 @@ perfil.addEventListener('click', function() {
     options.style.display = 'flex';
   }
 });
+
 document.querySelectorAll('.module').forEach(module => {
   module.addEventListener('click', function() {
-    var moduleId = this.dataset.id; // Obtém o ID do módulo a partir do atributo data-id
+    
+    var moduleId = this.dataset.id;
     var csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
 
     var requestOptions = {
@@ -23,16 +25,16 @@ document.querySelectorAll('.module').forEach(module => {
       body: JSON.stringify({ moduleId: moduleId })
     };
 
-    fetch('/module/', requestOptions) // Certifique-se de que este é o endpoint correto
+    fetch('/module/', requestOptions) 
       .then(response => {
         if (response.ok) {
-          return response.text(); // Obtém o HTML da resposta
+          return response.text();
         } else {
           throw new Error('Erro ao carregar módulo');
         }
       })
       .then(html => {
-        console.log(html); // Logar a resposta HTML para verificação
+        console.log(html);
         document.open();
         document.write(html);
         document.close();

@@ -127,8 +127,8 @@ iframe {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 20px;
     width: 100%;
+   
     background-color: #0F0F0F;
 }
 
@@ -227,6 +227,7 @@ div.comentario {
 
 div.comentario p#comentarios {
     user-select: none;
+    padding-bottom: 10px;
     font-weight: 600;
     color: white;
 }

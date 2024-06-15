@@ -24,11 +24,12 @@
     </header>
     <section>
         <article>
+            
             {% csrf_token %}
             {% for module in modules %}
             <p class="module-text">{{module.topic.title}}</p>
             <div class="modules">
-                <div class="module" data-id='{{ module.id }}'>
+                <div class="module" data-id='{{ module.id }}'  data-status="{{ module.status }}">
                     <div class="module-image">
                         <img src="{{module.image.url}}" alt="">
                         <div class="overlay"></div>
@@ -39,7 +40,7 @@
                     </div>
                     <p class="module-title">{{module.title}}</p>
                     <p class="module-description">{{module.description}}</p>
-                    <p class="chess">Chess.com Team</p>
+                    <p class="chess">Djangofy.com Team</p>
                     <div class="details">
                         <div class="detail">
                             <i class="fa-solid fa-user-graduate"></i>
@@ -61,5 +62,7 @@
         </article>
     </section>
     <script src="../static/js/script.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+    <script src="https://js.stripe.com/v3/"></script>
 </body>
 </html>
