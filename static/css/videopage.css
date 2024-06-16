@@ -26,10 +26,11 @@ header {
     padding: 24px;
 }
 
-header p {
+header a#logo {
     color: white;
     font-size: 1.4em;
     font-weight: 700;
+    cursor: pointer;
 }
 
 header .perfil {
@@ -81,10 +82,12 @@ header .perfil .perfil-image .options {
     padding-bottom: 10px;
     top: 25px;
     right: 20px;
+    gap: 10px;
 }
 
 header .perfil .perfil-image .options p {
     font-size: 20px;
+    color: white;
     font-weight: 600;
 }
 

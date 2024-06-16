@@ -9,14 +9,14 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.views.generic import TemplateView, View
 
-stripe.api_key = settings.STRIPE_SECRET_KEY
+
 def Home(request):
     topics = Topic.objects.all()
     modules = Module.objects.all()
     content = {
         'topics':topics,
         'modules':modules,
-        'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY
+        
     }
     return render(request, 'index.html', content)
 

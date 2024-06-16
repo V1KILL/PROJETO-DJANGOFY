@@ -40,3 +40,31 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+var logo = document.getElementById('logo')
+logo.addEventListener('click', function () {
+
+  fetch('/')
+    .then(response => {
+      if (!response.ok) {
+        throw new ERROR('Error Then')
+      }
+      window.location.href = '/';
+    })
+    .catch(error => {
+      console.error('erro meu amigo', error)
+    })
+
+})
+
+var perfil = document.querySelector('.perfil');
+var options = document.querySelector('.perfil-image .options');
+
+perfil.addEventListener('click', function() {
+
+  if (options.style.display === 'flex') {
+    options.style.display = 'none';
+  } else {
+    options.style.display = 'flex';
+  }
+});
