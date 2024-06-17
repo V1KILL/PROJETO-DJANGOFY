@@ -13,15 +13,15 @@
     <section id="CandLogin">
         <div class="form">
             <h1>Logar</h1>
-            <form action="{% url 'signin' %}" method="POST">
+            <form action="{% url 'login' %}" method="POST">
                 {% csrf_token %}
                 <input type="text" name="username" placeholder="Nome de Usuário" required minlength="8">
                 <input type="password" name="password" id="" placeholder="Senha" required minlength="8">
                 {% for message in messages %}
                 <h3 class="messages">{{message}}</h3>
                 {% endfor %}
-                <a href="signup">Eu não tenho uma conta</a>
-                <a href="recruiter">Entrar Como Recrutador</a>
+                <a href="register">Eu não tenho uma conta</a>
+                
                 <input id="submit" type="submit" value="Logar">
             </form>
         </div>

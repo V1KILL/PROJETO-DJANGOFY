@@ -12,30 +12,43 @@
     <header>
         <a id="logo">Djangofy</a>
         <div class="perfil">
+            
             <div class="perfil-image">
-                <img src="../static/img/1708190589974.jpg" alt="">
+                <img src="{{user.profileimg.url}}" alt="">
                 <div class="options">
                     <p id="perfil">Perfil</p>
-                    <p>Sair</p>
+                    <p id="logout" data-id="{{request.user.id}}">Sair</p>
                 </div>
             </div>
-            <a>Premium</a>
+            {% if not user.status %}
+                <a>Premium</a>
+            {% endif %}
         </div>
     </header>
     <section>
         <article>
-            
             {% csrf_token %}
             {% for module in modules %}
+                
             <p class="module-text">{{module.topic.title}}</p>
             <div class="modules">
                 <div class="module" data-id='{{ module.id }}'  data-status="{{ module.status }}">
                     <div class="module-image">
-                        <img src="{{module.image.url}}" alt="">
-                        <div class="overlay"></div>
-                        {% if module.status %}
-                            <i class="fa-solid fa-lock"></i>
-                            <p>Conteúdo Premium</p>
+                        {% if user.status %}
+                            <img src="{{module.image.url}}" alt="">
+                            <div class="overlay"></div>
+                        {% else %}
+                            {% if not user.status and module.status %}
+                                <img src="{{module.image.url}}" alt="">
+                                <div class="overlay"></div>
+                                <i class="fa-solid fa-lock"></i>
+                                <p>Conteúdo Premium</p>
+                            {% else %}
+                                {% if not user.status and not module.status %}
+                                    <img src="{{module.image.url}}" alt="">
+                                    <div class="overlay"></div>
+                                {% endif %}
+                            {% endif %}
                         {% endif %}
                     </div>
                     <p class="module-title">{{module.title}}</p>

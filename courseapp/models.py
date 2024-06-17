@@ -5,7 +5,7 @@ User = get_user_model()
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    profileimg = models.ImageField(upload_to='profiles/', default='1708190589974.jpg')
+    profileimg = models.ImageField(upload_to='profiles/', default='profiles/me.jpg')
     status = models.BooleanField(default=False)
 
     def __str__(self):
@@ -20,7 +20,7 @@ class Topic(models.Model):
 class Module(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
-    image = models.ImageField(upload_to='module/',default='1708190589974.jpg')
+    image = models.ImageField(upload_to='module/',default='module/code bg.webp')
     status = models.BooleanField(default=False)
     date = models.DateTimeField(auto_now_add=True)
     classes = models.IntegerField(default=0)
@@ -37,7 +37,7 @@ class Video(models.Model):
     status = models.BooleanField(default=False)
     date = models.DateTimeField(auto_now_add=True)
     module = models.ForeignKey('Module', on_delete=models.CASCADE, related_name='videos')
-    image = models.ImageField(upload_to='module/',default='1708190589974.jpg')
+    image = models.ImageField(upload_to='video/',default='video/code bg.webp')
 
     def __str__(self):
         return self.title

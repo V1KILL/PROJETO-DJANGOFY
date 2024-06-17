@@ -42,7 +42,7 @@ header .perfil a {
     color: white;
     font-weight: 600;
     text-decoration: none;
-    background-color:  #44B78B;
+    background-color:  #2D9964;
     border-radius: 8px;
     transition: 0.4s;
 }
@@ -117,7 +117,7 @@ section article p.module-text::after {
     left: 0%;
     width: 100%;
     bottom: 0;
-    border-bottom: 3px solid #44B78B;
+    border-bottom: 3px solid #2D9964;
 }
 
 section article .module {

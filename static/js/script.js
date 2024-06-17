@@ -74,5 +74,18 @@ perfil.addEventListener('click', function () {
     .catch(error => {
       console.error('erro meu amigo', error)
     })
+})
 
+var logout = document.getElementById('logout')
+logout.addEventListener('click', function () {
+    fetch('logout')
+      .then(response => {
+        if (!response.ok) {
+          throw new ERROR('Error Then')
+        }
+        window.location.href = 'login';
+      })
+      .catch(error => {
+        console.error('erro meu amigo', error)
+      })
 })
