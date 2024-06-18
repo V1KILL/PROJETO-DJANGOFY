@@ -28,6 +28,9 @@ class Module(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def formatted_date(self):
+        return self.date.strftime("%d, %B, %Y")
 
 class Video(models.Model):
     url = models.TextField()
