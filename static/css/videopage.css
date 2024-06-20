@@ -168,11 +168,17 @@ iframe {
     padding: 12px;
     font-weight: 600;
     border-radius: 16px;
+    transition: .4s;
+}
+
+.buttons a:hover {
+    transform: translateY(-3px);
 }
 
 .buttons span {
     display: flex;
     gap: 8px;
+    cursor: pointer;
 }
 
 .buttons span a {

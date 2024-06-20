@@ -45,6 +45,14 @@ class Video(models.Model):
     def __str__(self):
         return self.title
 
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)
+
+class Check(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)
+
 class Comment(models.Model):
     user = models.ForeignKey('UserProfile', on_delete=models.CASCADE, related_name='comments')
     date = models.DateTimeField(auto_now_add=True)

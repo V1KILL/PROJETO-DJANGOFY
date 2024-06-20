@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from courseapp.models import Topic, Module, Comment, Video, UserProfile, User
+from courseapp.models import Topic, Module, Comment, Video, UserProfile, User, Like, Check
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import json
@@ -87,31 +87,76 @@ def render_module(request):
 
         module = Module.objects.get(id=module_id)
         mainvideo = module.videos.first()
+        like = Like.objects.filter(user=request.user, video=mainvideo).exists()
         comments = Comment.objects.filter(video=mainvideo)
         videos = Video.objects.filter(module = module)
-        return render(request, 'videopage.html', {'module': module, 'mainvideo':mainvideo, 'comments':comments, 'videos':videos})
+        likes = Like.objects.all().filter(video=mainvideo)
+        check = Check.objects.filter(video=mainvideo, user=request.user)
+        return render(request, 'videopage.html', {'module': module, 'mainvideo':mainvideo, 'comments':comments, 'videos':videos, 'like':like, 'likes':likes, 'check':check})
     else:
         return JsonResponse({'error': 'Método não permitido'}, status=405)
+
 
 @csrf_exempt
 def render_video(request):
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
         video_id = data.get('videoId')
+        topicId = data.get('topicId')
+        moduleId = data.get('moduleId')
         print('Video ID recebido:', video_id)
-    
-        video = Video.objects.get(id=video_id)
-        module = video.module
+        print(f'topic id{ topicId}')
+        topic = Topic.objects.get(id=topicId)
+        module = Module.objects.get(topic=topic, id=moduleId)
+        video = Video.objects.get(id=video_id, module=module)
         comments = Comment.objects.filter(video=video)
         videos = Video.objects.filter(module=module)
+        likes = Like.objects.all().filter(video=video)
+        like = Like.objects.filter(user=request.user, video=video)
+        
         context = {
             'mainvideo': video,
             'comments': comments,
-            'videos': videos
+            'videos': videos,
+            'likes':likes,
+            'module':module,
+            'like':like,
         }
         return render(request, 'videopage.html', context)
     else:
         return JsonResponse({'error': 'Método não permitido'}, status=405)
+
+def ViewLike(request):
+    print('tudo certo')
+    data = json.loads(request.body.decode('utf-8'))
+    moduleId = data.get('moduleId')
+    videoId = data.get('videoId')
+    topicId = data.get('topicId')
+
+    topic = Topic.objects.get(id=topicId)
+    module = Module.objects.get(topic=topic, id=moduleId)
+    mainvideo = Video.objects.get(module=module, id=videoId)
+
+    like = Like.objects.filter(user=request.user, video=mainvideo)
+    likes = Like.objects.all().filter(video=mainvideo)
+    videos = Video.objects.filter(module=module)
+    comments = Comment.objects.filter(video=mainvideo)
+    if like:
+        like.delete()
+    else:
+        like = Like.objects.create(user=request.user, video=mainvideo)
+        like.save()
+
+    context = {
+        'like':like,
+        'likes':likes,
+        'module':module,
+        'mainvideo': mainvideo,
+        'videos':videos,
+        'comments': comments,
+    }
+
+    return render(request, 'videopage.html', context)
 
 class SuccessView(TemplateView):
     template_name = 'success.html'

@@ -32,8 +32,17 @@
                 <span>{{mainvideo.description}}</span>
             </div>
             <div class="buttons">
-                <a href="" class="check">Marcado</a>
-                <a href="" class="like"><i class="fa-regular fa-heart"></i>Like</a>
+                {% if check %}
+                <a style="background-color: #44B78B;" href="" class="check">Marcado</a>
+                {% else %}
+                <a href="" class="check">Marcar</a>
+                {% endif %}
+                {% if like %}
+                    <a style="background-color: green;" class="like" data-moduleid="{{ module.id }}" data-videoid="{{ mainvideo.id }}" data-topicid="{{ module.topic.id }}"><i class="fa-regular fa-heart"></i>{{ likes.count }}</a>
+                {% else %}
+                    <a class="like" data-moduleid="{{ module.id }}" data-videoid="{{ mainvideo.id }}" data-topicid="{{ module.topic.id }}"><i class="fa-regular fa-heart"></i>{{ likes.count }}</a>
+                {% endif %}
+
                 <span><a class="fa-solid fa-arrow-left"></a><a class="fa-solid fa-arrow-right"></a></span>
             </div>
         </div>
