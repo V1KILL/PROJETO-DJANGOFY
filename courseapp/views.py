@@ -113,6 +113,7 @@ def render_video(request):
         videos = Video.objects.filter(module=module)
         likes = Like.objects.all().filter(video=video)
         like = Like.objects.filter(user=request.user, video=video)
+        check = Check.objects.filter(user=request.user, video=video)
         
         context = {
             'mainvideo': video,
@@ -121,6 +122,7 @@ def render_video(request):
             'likes':likes,
             'module':module,
             'like':like,
+            'check':check,
         }
         return render(request, 'videopage.html', context)
     else:
@@ -141,6 +143,7 @@ def ViewLike(request):
     likes = Like.objects.all().filter(video=mainvideo)
     videos = Video.objects.filter(module=module)
     comments = Comment.objects.filter(video=mainvideo)
+    check = Check.objects.filter(user=request.user, video=mainvideo)
     if like:
         like.delete()
     else:
@@ -151,6 +154,41 @@ def ViewLike(request):
         'like':like,
         'likes':likes,
         'module':module,
+        'mainvideo': mainvideo,
+        'videos':videos,
+        'comments': comments,
+        'check':check,
+    }
+
+    return render(request, 'videopage.html', context)
+
+def ViewCheck(request):
+    print('tudo certo')
+    data = json.loads(request.body.decode('utf-8'))
+    moduleId = data.get('moduleId')
+    videoId = data.get('videoId')
+    topicId = data.get('topicId')
+
+    topic = Topic.objects.get(id=topicId)
+    module = Module.objects.get(topic=topic, id=moduleId)
+    mainvideo = Video.objects.get(module=module, id=videoId)
+
+    check = Check.objects.filter(user=request.user, video=mainvideo)
+    like = Like.objects.filter(user=request.user, video=mainvideo)
+    videos = Video.objects.filter(module=module)
+    comments = Comment.objects.filter(video=mainvideo)
+    likes = Like.objects.all().filter(video=mainvideo)
+    if check:
+        check.delete()
+    else:
+        check = Check.objects.create(user=request.user, video=mainvideo)
+        check.save()
+
+    context = {
+        'check':check,
+        'module':module,
+        'like':like,
+        'likes':likes,
         'mainvideo': mainvideo,
         'videos':videos,
         'comments': comments,

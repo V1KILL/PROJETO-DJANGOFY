@@ -113,3 +113,44 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    var checkButton = document.querySelector('.buttons a.check');
+    if (checkButton) {
+        checkButton.addEventListener('click', function(event) {
+          event.preventDefault();
+
+        var moduleId = checkButton.getAttribute("data-moduleid");
+        var videoId = checkButton.getAttribute("data-videoid");
+        var topicId = checkButton.getAttribute("data-topicid");
+        var csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
+
+        var requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+            },
+            body: JSON.stringify({ moduleId: moduleId, videoId: videoId, topicId: topicId })
+        };
+
+        fetch('/check/', requestOptions) 
+          .then(response => {
+              if (response.ok) {
+                  return response.text(); 
+              } else {
+                  throw new Error('Erro ao carregar vídeo');
+              }
+          })
+          .then(html => {
+              console.log(html); // L
+              document.open();
+              document.write(html);
+              document.close();
+          })
+          .catch(error => {
+              console.error('Erro ao carregar vídeo', error);
+          });
+      });
+  }
+});
