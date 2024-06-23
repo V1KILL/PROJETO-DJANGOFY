@@ -76,7 +76,9 @@ def ViewLogout(request):
     return render(request, 'login.html')
 
 def Perfil(request):
-    return render(request, 'perfil.html')
+    user = User.objects.get(id=request.user.id)
+    user = UserProfile.objects.get(user=user)
+    return render(request, 'perfil.html', {'user':user})
 
 @csrf_exempt
 def render_module(request):

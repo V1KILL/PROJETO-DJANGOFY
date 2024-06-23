@@ -9,10 +9,14 @@
 </head>
 <body>
     <header>
-        <a id="logo">Curso</a>
+        <a id="logo">Djangofy</a>
         <div class="perfil">
             <div class="perfil-image">
-                <img src="../static/img/1708190589974.jpg" alt="">
+                <img src="{{user.profileimg.url}}" alt="">
+                <div class="options">
+                    <p id="perfil">Perfil</p>
+                    <p id="logout" data-id="{{request.user.id}}">Sair</p>
+                </div>
             </div>
             <a href="">Premium</a>
         </div>

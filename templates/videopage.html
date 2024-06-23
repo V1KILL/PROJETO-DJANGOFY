@@ -75,6 +75,17 @@
                 {% endif %}
             {% endfor %}
         </div>
+        
+
+        <div class="comentar">
+            <p>Fazer Um Comentário</p>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input id="comentario" name="comentario"  type="text" placeholder="Comentário" required>
+                <input id="submit" type="submit" value="Enviar o Comentário">
+            </form>
+        </div>
+        
         <div class="videos">
             {% for video in videos %}
                 {% if video == mainvideo %}
