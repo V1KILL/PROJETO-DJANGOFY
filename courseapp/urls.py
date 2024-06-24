@@ -1,7 +1,7 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import Home, Perfil, render_module, render_video, CreateCheckoutSessionView, CancelView, SuccessView, ViewLogin, ViewRegister, ViewLogout, ViewLike, ViewCheck
+from .views import Home, Perfil, render_module, render_video, CreateCheckoutSessionView, CancelView, SuccessView, ViewLogin, ViewRegister, ViewLogout, ViewLike, ViewCheck, ViewComentar, ViewResponder
 urlpatterns = [
     path('', Home, name='home'),
     path('perfil', Perfil, name='perfil'),
@@ -15,6 +15,8 @@ urlpatterns = [
     path('logout', ViewLogout, name='logout'),
     path('like/', ViewLike, name='like'),
     path('check/', ViewCheck, name='check'),
+    path('comentar/', ViewComentar, name='comentar'),
+    path('responder/', ViewResponder, name='responder'),
 
 
 

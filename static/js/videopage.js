@@ -154,3 +154,102 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   }
 });
+var checkButton = document.querySelector('.buttons a.check');
+document.querySelector('.comentar button').addEventListener('click', function() {
+    
+    var moduleId = checkButton.getAttribute("data-moduleid");
+    var videoId = checkButton.getAttribute("data-videoid");
+    var topicId = checkButton.getAttribute("data-topicid");
+    var csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
+    var comentario = document.querySelector('.comentar input').value;
+    if (comentario) {
+        var dados = {
+            comentario: comentario,
+            moduleId: moduleId,
+            videoId: videoId,
+            topicId: topicId
+        };
+   
+    console.log(comentario)
+
+    var requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken,
+        },
+        body: JSON.stringify(dados)
+    };
+    fetch('/comentar/', requestOptions) 
+        .then(response => {
+            if (response.ok) {
+                return response.text(); 
+            } else {
+                throw new Error('Erro ao carregar vídeo');
+            }
+        })
+        .then(html => {
+            console.log(html); // L
+            document.open();
+            document.write(html);
+            document.close();
+        })
+        .catch(error => {
+            console.error('Erro ao carregar vídeo', error);
+        });
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+   
+    document.querySelectorAll('.subcomentariodescricao button').forEach(function(button) {
+        button.addEventListener('click', function() {
+            var checkButton = document.querySelector('.buttons a.check');
+            var moduleId = checkButton.getAttribute("data-moduleid");
+            var videoId = checkButton.getAttribute("data-videoid");
+            var topicId = checkButton.getAttribute("data-topicid");
+            var csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
+            var comentarioId = this.dataset.id;
+            var comentario = this.previousElementSibling.value;
+
+            if (comentario) {
+                var dados = {
+                    comentario: comentario,
+                    moduleId: moduleId,
+                    videoId: videoId,
+                    topicId: topicId,
+                    comentarioId: comentarioId
+                };
+
+                
+                var requestOptions = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken,
+                    },
+                    body: JSON.stringify(dados)
+                };
+                fetch('/responder/', requestOptions)
+                    .then(response => {
+                        if (response.ok) {
+                            return response.text();
+                        } else {
+                            throw new Error('Erro ao carregar vídeo');
+                        }
+                    })
+                    .then(html => {
+                        console.log(html);
+                        document.open();
+                        document.write(html);
+                        document.close();
+                    })
+                    .catch(error => {
+                        console.error('Erro ao carregar vídeo', error);
+                    });
+            }
+        });
+    });
+});
+

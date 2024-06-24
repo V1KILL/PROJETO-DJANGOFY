@@ -94,7 +94,8 @@ def render_module(request):
         videos = Video.objects.filter(module = module)
         likes = Like.objects.all().filter(video=mainvideo)
         check = Check.objects.filter(video=mainvideo, user=request.user)
-        return render(request, 'videopage.html', {'module': module, 'mainvideo':mainvideo, 'comments':comments, 'videos':videos, 'like':like, 'likes':likes, 'check':check})
+        user = UserProfile.objects.get(user=request.user)
+        return render(request, 'videopage.html', {'module': module, 'mainvideo':mainvideo, 'comments':comments, 'videos':videos, 'like':like, 'likes':likes, 'check':check, 'user':user})
     else:
         return JsonResponse({'error': 'Método não permitido'}, status=405)
 
@@ -116,6 +117,7 @@ def render_video(request):
         likes = Like.objects.all().filter(video=video)
         like = Like.objects.filter(user=request.user, video=video)
         check = Check.objects.filter(user=request.user, video=video)
+        user = UserProfile.objects.get(user=request.user)
         
         context = {
             'mainvideo': video,
@@ -125,6 +127,7 @@ def render_video(request):
             'module':module,
             'like':like,
             'check':check,
+            'user':user,
         }
         return render(request, 'videopage.html', context)
     else:
@@ -146,6 +149,7 @@ def ViewLike(request):
     videos = Video.objects.filter(module=module)
     comments = Comment.objects.filter(video=mainvideo)
     check = Check.objects.filter(user=request.user, video=mainvideo)
+    user = UserProfile.objects.get(user=request.user)
     if like:
         like.delete()
     else:
@@ -160,6 +164,7 @@ def ViewLike(request):
         'videos':videos,
         'comments': comments,
         'check':check,
+        'user':user,
     }
 
     return render(request, 'videopage.html', context)
@@ -180,6 +185,7 @@ def ViewCheck(request):
     videos = Video.objects.filter(module=module)
     comments = Comment.objects.filter(video=mainvideo)
     likes = Like.objects.all().filter(video=mainvideo)
+    user = UserProfile.objects.get(user=request.user)
     if check:
         check.delete()
     else:
@@ -194,6 +200,7 @@ def ViewCheck(request):
         'mainvideo': mainvideo,
         'videos':videos,
         'comments': comments,
+        'user':user,
     }
 
     return render(request, 'videopage.html', context)
@@ -232,3 +239,71 @@ class CreateCheckoutSessionView(View):
             'id':checkout_session.id
         }
         )
+
+@csrf_exempt
+def ViewComentar(request):
+    print('cheguei')
+    data = json.loads(request.body.decode('utf-8'))
+    comentario = data.get("comentario")
+    moduleId = data.get('moduleId')
+    videoId = data.get('videoId')
+    topicId = data.get('topicId')
+    print(comentario)
+
+    topic = Topic.objects.get(id=topicId)
+    module = Module.objects.get(topic=topic, id=moduleId)
+    mainvideo = Video.objects.get(module=module, id=videoId)
+    user = UserProfile.objects.get(user=request.user)
+    comentario = Comment.objects.create(user= user, text=comentario, video=mainvideo)
+    comentario.save()
+    check = Check.objects.filter(user=request.user, video=mainvideo)
+    like = Like.objects.filter(user=request.user, video=mainvideo)
+    videos = Video.objects.filter(module=module)
+    comments = Comment.objects.filter(video=mainvideo)
+    likes = Like.objects.all().filter(video=mainvideo)
+    context = {
+        'check':check,
+        'module':module,
+        'like':like,
+        'likes':likes,
+        'mainvideo': mainvideo,
+        'videos':videos,
+        'comments': comments,
+        'user':user
+    }
+    return render(request, 'videopage.html', context)
+
+def ViewResponder(request):
+    print('cheguei')
+    data = json.loads(request.body.decode('utf-8'))
+    resposta = data.get("comentario")
+    moduleId = data.get('moduleId')
+    videoId = data.get('videoId')
+    topicId = data.get('topicId')
+    comentarioId = data.get('comentarioId')
+   
+
+    topic = Topic.objects.get(id=topicId)
+    module = Module.objects.get(topic=topic, id=moduleId)
+    mainvideo = Video.objects.get(module=module, id=videoId)
+    user = UserProfile.objects.get(user=request.user)
+    comentario = Comment.objects.get(video=mainvideo, id=comentarioId)
+    response = Comment.objects.create(video=mainvideo, text=resposta, user=user, response=comentario)
+    response.save()
+    
+    check = Check.objects.filter(user=request.user, video=mainvideo)
+    like = Like.objects.filter(user=request.user, video=mainvideo)
+    videos = Video.objects.filter(module=module)
+    comments = Comment.objects.filter(video=mainvideo)
+    likes = Like.objects.all().filter(video=mainvideo)
+    context = {
+        'check':check,
+        'module':module,
+        'like':like,
+        'likes':likes,
+        'mainvideo': mainvideo,
+        'videos':videos,
+        'comments': comments,
+        'user':user,
+        }
+    return render(request, 'videopage.html', context)
