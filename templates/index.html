@@ -26,48 +26,49 @@
         </div>
     </header>
     <section>
+        
         <article>
             {% csrf_token %}
-            {% for module in modules %}
-                
-            <p class="module-text">{{module.topic.title}}</p>
-            <div class="modules">
-                <div class="module" data-id='{{ module.id }}'  data-status="{{ module.status }}">
-                    <div class="module-image">
-                        {% if user.status %}
-                            <img src="{{module.image.url}}" alt="">
-                            <div class="overlay"></div>
-                        {% else %}
-                            {% if not user.status and module.status %}
-                                <img src="{{module.image.url}}" alt="">
-                                <div class="overlay"></div>
-                                <i class="fa-solid fa-lock"></i>
-                                <p>Conteúdo Premium</p>
-                            {% else %}
-                                {% if not user.status and not module.status %}
+            {% for topic in topics %}
+                <p class="module-text">{{topic.title}}</p>
+                <div class="modules">
+                    {% for module in topic.topics.all %}
+                        <div class="module" data-id='{{ module.id }}'  data-status="{{ module.status }}">
+                            <div class="module-image">
+                                {% if user.status %}
                                     <img src="{{module.image.url}}" alt="">
                                     <div class="overlay"></div>
+                                {% else %}
+                                    {% if not user.status and module.status %}
+                                        <img src="{{module.image.url}}" alt="">
+                                        <div class="overlay"></div>
+                                        <i class="fa-solid fa-lock"></i>
+                                        <p>Conteúdo Premium</p>
+                                    {% else %}
+                                        {% if not user.status and not module.status %}
+                                            <img src="{{module.image.url}}" alt="">
+                                            <div class="overlay"></div>
+                                        {% endif %}
+                                    {% endif %}
                                 {% endif %}
-                            {% endif %}
-                        {% endif %}
-                    </div>
-                    <p class="module-title">{{module.title}}</p>
-                    <p class="module-description">{{module.description}}</p>
-                    <p class="chess">Djangofy.com Team</p>
-                    <div class="details">
-                        <div class="detail">
-                            <i class="fa-solid fa-user-graduate"></i>
-                            <p>{{module.videos.count}} Aulas</p>
+                            </div>
+                            <p class="module-title">{{module.title}}</p>
+                            <p class="module-description">{{module.description}}</p>
+                            <p class="chess">Djangofy.com Team</p>
+                            <div class="details">
+                                <div class="detail">
+                                    <i class="fa-solid fa-user-graduate"></i>
+                                    <p>{{module.videos.count}} Aulas</p>
+                                </div>
+                                <div class="detail">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                    <p>{{module.formatted_date}}</p>
+                                </div>
+                                
+                            </div>
                         </div>
-                        <div class="detail">
-                            <i class="fa-solid fa-calendar-days"></i>
-                            <p>{{module.formatted_date}}</p>
-                        </div>
-                        
-                    </div>
+                        {% endfor %}
                 </div>
-            </div>
-            
             {% endfor %}
         </article>
     </section>
