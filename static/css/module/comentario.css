@@ -1,0 +1,73 @@
+div.comentario {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-left: 30px;
+    padding-top: 30px;
+    gap: 20px;
+}
+
+div.comentario p#comentarios {
+    user-select: none;
+    padding-bottom: 10px;
+    font-weight: 600;
+    color: white;
+}
+
+div.comentario div#comentario {
+    display: flex;
+    gap: 20px;
+    padding-bottom: 20px;
+}
+
+div.comentario div#comentario div#perfil img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+}
+
+div.comentario div#comentario div#descricao {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-weight: 300;
+    color: white;
+}
+
+div.comentario div#comentario div#descricao a {
+    font-weight: 500;
+    text-decoration: none;
+    color: white;
+    transition: 0.3s ease;
+}
+
+div.comentario div#comentario div#descricao #subcomentario {
+    display: flex;
+    padding-top: 10px;
+    gap: 10px;
+    font-weight: 300;
+    color: white;
+}
+
+#subcomentario #descricao input {
+    border: none;
+    outline: none;
+    padding: 5px;
+    color: white;
+    border-bottom: 1px solid grey;
+    background-color: transparent;
+}
+
+#subcomentario #descricao button {
+    outline: none;
+    border: none;
+    padding: 8px;
+    font-weight: 600;
+    font-size: 1em;
+    color: white;
+    background-color: #19C37D;
+    transition: 0.4s;
+    border-radius: 8px;
+}

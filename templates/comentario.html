@@ -1,0 +1,38 @@
+<div class="comentario">
+    <p id="comentarios">Comentários ({{comments.count}})</p>
+    {% for comment in comments %}
+        {% if not comment.response %}
+            <div id="comentario">
+                <div id="perfil">
+                    <img src="{{ comment.user.profileimg.url }}" alt="Profile Picture">
+                </div>
+                <div id="descricao">
+                    <a href="#">{{ comment.user.user.username }}</a>
+                    <p>{{ comment.text }}</p>
+                    <!-- Respostas -->
+                    <div id="subcomentario" class="subcomentario">
+                        <div id="perfil">
+                            <img src="{{ user.profileimg.url }}" alt="Profile Picture">
+                        </div>
+                        <div id="descricao" class="subcomentariodescricao">
+                            
+                            <input type="text">
+                            <button data-id="{{comment.id}}">Responder</button>
+                        </div>
+                    </div>
+                    {% for response in comment.responses.all %}
+                        <div id="subcomentario">
+                            <div id="perfil">
+                                <img src="{{ response.user.profileimg.url }}" alt="Profile Picture">
+                            </div>
+                            <div id="descricao">
+                                <a href="#">{{ response.user.user.username }}</a>
+                                <p>{{ response.text }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>

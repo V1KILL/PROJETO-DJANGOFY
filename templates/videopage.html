@@ -5,120 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="{% static 'css/videopage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/module/videopage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index/header.css' %}">
+    <link rel="stylesheet" href="{% static 'css/module/comentar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/module/comentario.css' %}">
+    <link rel="stylesheet" href="{% static 'css/module/video.css' %}">
+    <link rel="stylesheet" href="{% static 'css/module/videos.css' %}">
     <script src="https://kit.fontawesome.com/c99caadda1.js" crossorigin="anonymous"></script>
     <script src="../static/js/videopage.js"></script>
 </head>
 <body>
-    <header>
-        <a id="logo">Djangofy</a>
-        <div class="perfil">
-            <div class="perfil-image">
-                <img src="{{user.profileimg.url}}" alt="">
-                <div class="options">
-                    <p id="perfil">Perfil</p>
-                    <p>Sair</p>
-                </div>
-            </div>
-            <a href="">Premium</a>
-        </div>
-    </header>
+    {% include 'header.html' %}
     <section>
-        <div class="mainvideo">
-            {{mainvideo.url|safe}}
-            <div class="mainvideotext">
-                <p>{{mainvideo.title}}</p>
-                
-                <span>{{mainvideo.description}}</span>
-            </div>
-            <div class="buttons">
-                {% if check %}
-                    <a style="background-color: #44B78B;" data-moduleid="{{ module.id }}" data-videoid="{{ mainvideo.id }}" data-topicid="{{ module.topic.id }}" class="check">Marcado</a>
-                {% else %}
-                    <a class="check" data-moduleid="{{ module.id }}" data-videoid="{{ mainvideo.id }}" data-topicid="{{ module.topic.id }}">Marcar</a>
-                {% endif %}
-                {% if like %}
-                    <a style="background-color: #ff0000;" class="like" data-moduleid="{{ module.id }}" data-videoid="{{ mainvideo.id }}" data-topicid="{{ module.topic.id }}"><i class="fa-regular fa-heart"></i>{{ likes.count }}</a>
-                {% else %}
-                    <a class="like" data-moduleid="{{ module.id }}" data-videoid="{{ mainvideo.id }}" data-topicid="{{ module.topic.id }}"><i class="fa-regular fa-heart"></i>{{ likes.count }}</a>
-                {% endif %}
-
-                <span><a class="fa-solid fa-arrow-left"></a><a class="fa-solid fa-arrow-right"></a></span>
-            </div>
-        </div>
-        
-        <div class="comentario">
-            <p id="comentarios">Comentários ({{comments.count}})</p>
-            {% for comment in comments %}
-                {% if not comment.response %}
-                    <div id="comentario">
-                        <div id="perfil">
-                            <img src="{{ comment.user.profileimg.url }}" alt="Profile Picture">
-                        </div>
-                        <div id="descricao">
-                            <a href="#">{{ comment.user.user.username }}</a>
-                            <p>{{ comment.text }}</p>
-                            <!-- Respostas -->
-                            <div id="subcomentario" class="subcomentario">
-                                <div id="perfil">
-                                    <img src="{{ user.profileimg.url }}" alt="Profile Picture">
-                                </div>
-                                <div id="descricao" class="subcomentariodescricao">
-                                    
-                                    <input type="text">
-                                    <button data-id="{{comment.id}}">Responder</button>
-                                </div>
-                            </div>
-                            {% for response in comment.responses.all %}
-                                <div id="subcomentario">
-                                    <div id="perfil">
-                                        <img src="{{ response.user.profileimg.url }}" alt="Profile Picture">
-                                    </div>
-                                    <div id="descricao">
-                                        <a href="#">{{ response.user.user.username }}</a>
-                                        <p>{{ response.text }}</p>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        </div>
-        
-        {% csrf_token %}
-        <div class="comentar">
-            <p>Fazer Um Comentário</p>
+        <div class="maincontent">
+            {% include 'video.html' %}
             
+            {% include 'comentario.html' %}
+            {% include 'comentar.html' %}
             
-            <input id="comentario" name="comentario"  type="text" placeholder="Comentário" required>
-            <button type="submit">Enviar</button>
+        
             
         </div>
-        
-        <div class="videos">
-            {% for video in videos %}
-                {% if video == mainvideo %}
-                <div class="video" data-id='{{ video.id }}' style="background-color: #3F3F3F;">
-                    <div class="videoimage">
-                        <img src="{{video.image.url}}" alt="">
-                    </div>
-                    <p class="level">{{module.topic.title}}</p>
-                    <p class="videotitle">{{video.title}}</p>
-                </div>
-                {% else %}
-                    <div class="video" data-id='{{ video.id }}'>
-                        <div class="videoimage">
-                            <img src="{{video.image.url}}" alt="">
-                        </div>
-                        <p class="level">{{module.topic.title}}</p>
-                        <p class="videotitle">{{video.title}}</p>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        </div>
-        
+        {% include 'videos.html' %}
     </section>
+    
     <script src="../static/js/videopage.js"></script>
 </body>
 </html>

@@ -1,0 +1,82 @@
+.maincontent {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.mainvideo {
+    width: 100%;
+}
+
+.mainvideotext {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-left: 30px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.mainvideotext p {
+    color: white;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.mainvideotext span {
+    border-radius: 16px;
+    font-weight: 500;
+    color: white;
+    padding: 12px;
+    background-color: #3F3F3F;
+}
+
+iframe {
+    width: 100%;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    padding-left: 30px;
+    padding-bottom: 10px;
+}
+
+.buttons a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: white;
+    padding: 12px;
+    font-weight: 600;
+    border-radius: 16px;
+    transition: .4s;
+}
+
+.buttons a:hover {
+    transform: translateY(-3px);
+}
+
+.buttons span {
+    display: flex;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.buttons span a {
+    background-color: #3F3F3F;
+    padding: 12px;
+
+}
+
+.buttons .like {
+    background-color: #3F3F3F;
+}
+
+.buttons .check {
+    background-color: #3F3F3F;
+}

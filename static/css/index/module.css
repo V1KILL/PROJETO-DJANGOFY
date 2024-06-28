@@ -1,0 +1,132 @@
+.modules {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+section article p.module-text {
+    position: relative;
+    font-size: 2em;
+    font-weight: 700;
+    padding-bottom: 8px;
+    color: white;
+}
+
+section article p.module-text::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    left: 0%;
+    bottom: 0;
+    border-bottom: 3px solid #2D9964;
+}
+
+section article .module {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 300px;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #0F0F0F;
+    transition: transform 0.4s, box-shadow 0.4s;
+}
+
+section article .module:hover {
+    cursor: pointer;
+    box-shadow: 0.5px 0.5px 8px rgba(255, 255, 255, 0.500);
+    transform: translateY(-5px);
+}
+
+section article .module .module-image {
+    position: relative;
+    width: 100%;
+}
+
+section article .module .module-image p {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    font-weight: 600;
+    font-size: 20px;
+    opacity: 0;
+    bottom: 0;
+    color: white;
+    transition: opacity 0.4s, bottom 0.4s;
+}
+
+section article .module .module-image:hover p {
+    display: block;
+    bottom: 30%;
+    opacity: 1;
+}
+
+section article .module .module-image i {
+    position: absolute;
+    font-size: 40px;
+    left: 45%;
+    bottom: 40%;
+    color: white;
+    transition: bottom 0.4s;
+}
+
+section article .module .module-image:hover i {
+    position: absolute;
+    font-size: 40px;
+    left: 45%;
+    bottom: 50%;
+    color: white;
+}
+
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    border-radius: 12px;
+    background-color: rgba(0, 0, 0, 0.300);
+    transition: 0.4s;
+}
+
+section article .module .module-image:hover .overlay {
+    background-color: rgba(0, 0, 0, 0.600);
+}
+
+section article .module .module-image img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 12px;
+}
+
+.module .module-title {
+    color: white;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.module .module-description {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.chess {
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.details {
+    display: flex;
+    gap: 10px;
+}
+
+.detail {
+    display: flex;
+    gap: 8px;
+    color: white;
+}
+
+.detail p {
+    font-weight: 500;
+}

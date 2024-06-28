@@ -1,0 +1,57 @@
+div.comentar {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 30px;
+    gap: 20px;
+}
+
+div.comentar  p {
+    user-select: none;
+    font-weight: 500;
+    color: white;
+}
+
+div.comentar form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+div.comentar form input {
+    transition: 0.3s all ease;
+}
+
+div.comentar form input:hover {
+    border-color: #19C37D;
+}
+
+div.comentar input {
+    border: none;
+    outline: none;
+    padding: 5px;
+    color: white;
+    border-bottom: 1px solid grey;
+    background-color: transparent;
+}
+
+div.comentar input::placeholder {
+    color: rgb(102, 102, 102);
+}
+
+div.comentar button {
+    outline: none;
+    border: none;
+    padding: 8px;
+    font-weight: 600;
+    font-size: 1em;
+    color: white;
+    background-color: #19C37D;
+    transition: 0.4s;
+    border-radius: 8px;
+}
+
+div.comentar button:hover {
+    background-color: white;
+    color: #0F0F0F;
+}

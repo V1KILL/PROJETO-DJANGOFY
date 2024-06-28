@@ -1,0 +1,22 @@
+<div class="videos">
+    {% for video in videos %}
+        {% if video == mainvideo %}
+        <div class="video" data-id='{{ video.id }}' style="background-color: #3F3F3F;">
+            <div class="videoimage">
+                <img src="{{video.image.url}}" alt="">
+            </div>
+            <p class="level">{{module.topic.title}}</p>
+            <p class="videotitle">{{video.title}}</p>
+        </div>
+        {% else %}
+            <div class="video" data-id='{{ video.id }}'>
+                <div class="videoimage">
+                    <img src="{{video.image.url}}" alt="">
+                </div>
+                <p class="level">{{module.topic.title}}</p>
+                <p class="videotitle">{{video.title}}</p>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% csrf_token %}
