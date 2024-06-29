@@ -26,10 +26,10 @@
 }
 
 .mainvideotext span {
-    border-radius: 16px;
+    border-radius: 8px;
     font-weight: 500;
     color: white;
-    padding: 12px;
+    padding: 8px;
     background-color: #3F3F3F;
 }
 
@@ -51,9 +51,9 @@ iframe {
     gap: 10px;
     text-decoration: none;
     color: white;
-    padding: 12px;
+    padding: 8px;
     font-weight: 600;
-    border-radius: 16px;
+    border-radius: 8px;
     transition: .4s;
 }
 

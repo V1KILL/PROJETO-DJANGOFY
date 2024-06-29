@@ -10,6 +10,7 @@
                     <a href="#">{{ comment.user.user.username }}</a>
                     <p>{{ comment.text }}</p>
                     <!-- Respostas -->
+                    {% if request.user.is_staff %}
                     <div id="subcomentario" class="subcomentario">
                         <div id="perfil">
                             <img src="{{ user.profileimg.url }}" alt="Profile Picture">
@@ -20,6 +21,7 @@
                             <button data-id="{{comment.id}}">Responder</button>
                         </div>
                     </div>
+                    {% endif %}
                     {% for response in comment.responses.all %}
                         <div id="subcomentario">
                             <div id="perfil">

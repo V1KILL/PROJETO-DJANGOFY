@@ -1,3 +1,11 @@
+document.addEventListener('DOMContentLoaded', function () {
+    new Splide('.splide', {
+        type   : 'loop',
+        perPage: 3,
+        autoplay: true,
+    }).mount();
+});
+
 var likeButton = document.querySelector('.buttons a.like');
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.video').forEach(video => {

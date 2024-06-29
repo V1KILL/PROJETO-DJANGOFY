@@ -1,3 +1,18 @@
+document.addEventListener('DOMContentLoaded', function () {
+  var splides = document.querySelectorAll('.splide');
+  splides.forEach(function(splide) {
+      var slideCount = splide.querySelectorAll('.splide__slide').length;
+      new Splide(splide, {
+          
+       
+       
+        focus    : '0',
+        autoWidth: true,
+        pagination: false,
+      }).mount();
+  });
+});
+
 var perfil = document.querySelector('.perfil');
 var options = document.querySelector('.perfil-image .options');
 

@@ -4,29 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../static/css/perfil.css">
+    <link rel="stylesheet" href="../static/css/perfil/perfil.css">
+    <link rel="stylesheet" href="../static/css/index/header.css">
     <script src="../static/js/main.js"></script>
 </head>
 <body>
-    <header>
-        <a id="logo">Djangofy</a>
-        <div class="perfil">
-            <div class="perfil-image">
-                <img src="{{user.profileimg.url}}" alt="">
-                <div class="options">
-                    <p id="perfil">Perfil</p>
-                    <p id="logout" data-id="{{request.user.id}}">Sair</p>
-                </div>
-            </div>
-            <a href="">Premium</a>
-        </div>
-    </header>
+    {% include 'header.html' %}
     <section>
         <article>
             <p>Informações</p>
             <form action="">
-                <label for="name">Nome<input type="text" name="name" id=""></label>
-                <label for="email">Email<input type="email" name="email" id=""></label>
+                <label for="name">Nome<input type="text" name="name" id="" value="{{request.user.username}}"></label>
+                
                 <button type="submit">Salvar</button>
             </form>
         </article>
@@ -35,9 +24,13 @@
             <form action="">
                 <label for="password">Senha<input type="password" name="password" id=""></label>
                 <label for="password2">Confirmar Senha<input type="password" name="password2" id=""></label>
-                <button type="submit">Alterar Senha</button>
+                <button type="submit">Salvar</button>
             </form>
-        </article>
+            <p>Foto de Perfil</p>
+            <form action="">
+                <label for="image"><input type="file" name="image" id=""></label>
+                
+            </form>
     </section>
     <script src="../static/js/main.js"></script>
 </body>

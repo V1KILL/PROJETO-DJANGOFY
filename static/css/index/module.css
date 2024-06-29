@@ -130,3 +130,11 @@ section article .module .module-image img {
 .detail p {
     font-weight: 500;
 }
+
+.splide__track {
+    padding-top: 10px;
+}
+
+.splide__slide {
+    padding:10px;
+}

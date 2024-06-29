@@ -29,7 +29,8 @@ div.comentar form input:hover {
 div.comentar input {
     border: none;
     outline: none;
-    padding: 5px;
+    padding: 8px;
+    border-radius: 8px;
     color: white;
     border-bottom: 1px solid grey;
     background-color: transparent;
@@ -40,13 +41,15 @@ div.comentar input::placeholder {
 }
 
 div.comentar button {
+    align-self: flex-end;
+    min-width: 100px;
     outline: none;
     border: none;
     padding: 8px;
     font-weight: 600;
     font-size: 1em;
     color: white;
-    background-color: #19C37D;
+    background-color: #44B78B;
     transition: 0.4s;
     border-radius: 8px;
 }

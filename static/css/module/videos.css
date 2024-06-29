@@ -103,3 +103,9 @@
 iframe {
     height: 800px;
 }
+
+.splide__slide div{
+    width: 500px;
+    height: 500px;
+    background-color: red;
+}

@@ -54,7 +54,7 @@ div.comentario div#comentario div#descricao #subcomentario {
 #subcomentario #descricao input {
     border: none;
     outline: none;
-    padding: 5px;
+    padding: 8px;
     color: white;
     border-bottom: 1px solid grey;
     background-color: transparent;
@@ -67,7 +67,7 @@ div.comentario div#comentario div#descricao #subcomentario {
     font-weight: 600;
     font-size: 1em;
     color: white;
-    background-color: #19C37D;
+    background-color: #44B78B;
     transition: 0.4s;
     border-radius: 8px;
 }
