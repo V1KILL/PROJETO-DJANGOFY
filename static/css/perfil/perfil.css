@@ -37,8 +37,7 @@ article p {
 
 form {
     display: flex;
-    flex-direction: column;
-    
+    flex-direction: column;   
     gap: 20px;
     padding-top: 20px;
     width: 100%;
@@ -53,36 +52,33 @@ form label {
 }
 
 form input {
-    background-color: transparent;
-    min-width: 300px;
-    border: 2px solid #A3A3A3;
     outline: none;
-    color: white;
     padding: 8px;
-    
+    min-width: 300px;
+    color: white;
     border-radius: 8px;
+    border: 2px solid #A3A3A3;
+    background-color: transparent;
 }
 
 form button {
-    background-color: #44B78B;
-    
+    align-self: flex-start;
     min-width: 100px;
     text-align: center;
-    align-self: flex-start;
-    color: white;
     font-weight: 600;
     font-size: 1em;
+    color: white;
     padding: 8px;
     border: 0px;
     border-radius: 8px;
+    background-color: #44B78B;
 }
  
 form input[type='file'] {
-    background-color: #44B78B;
-    
     font-weight: 600;
     color: white;
     border: 0;
+    background-color: #44B78B;
 }
 
 @media (max-width: 412px){

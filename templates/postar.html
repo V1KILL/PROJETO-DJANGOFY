@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tópico e Módulo</title>
+    <link rel="stylesheet" href="../static/css/postar/postar.css">
+    <link rel="stylesheet" href="../static/css/index/header.css">
+</head>
+<body>
+    {% include 'header.html' %}
+    <section>
+        <div>
+            <p>Tópico</p>
+            <input type="text" placeholder="Título">
+        </div>
+        <div>
+            <p>Módulo</p>
+            <input type="text" placeholder="Título">
+            <input type="text" placeholder="Descrição">
+        </div>
+        
+        <div>
+            <p>Capa do Módulo</p>
+            <input type="file" name="" id="">
+        </div>
+        <div>
+            <p>Tipo de Conteúdo</p>
+            <select name="" id="">
+                <option value="False">Gratuito</option>
+                <option value="Premium">Premium</option>
+            </select>
+        </div>
+        <div>
+            <input type="submit" value="Criar Vídeo">
+        </div>
+    </section>
+    <script src="../static/js/script.js"></script>
+</body>
+</html>

@@ -307,3 +307,9 @@ def ViewResponder(request):
         'user':user,
         }
     return render(request, 'videopage.html', context)
+
+def ViewCreateVideo(request):
+    return render(request, 'postar2.html')
+
+def ViewCreateTopicAndModule(request):
+    return render(request, 'postar.html')

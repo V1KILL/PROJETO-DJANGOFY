@@ -91,6 +91,36 @@ perfil.addEventListener('click', function () {
     })
 })
 
+var createvideo = document.getElementById('createvideo')
+createvideo.addEventListener('click', function () {
+
+  fetch('createvideo')
+    .then(response => {
+      if (!response.ok) {
+        throw new ERROR('Error Then')
+      }
+      window.location.href = 'createvideo';
+    })
+    .catch(error => {
+      console.error('erro meu amigo', error)
+    })
+})
+
+var createtopicandmodule = document.getElementById('createtopicandmodule')
+createtopicandmodule.addEventListener('click', function () {
+
+  fetch('createtopicandmodule')
+    .then(response => {
+      if (!response.ok) {
+        throw new ERROR('Error Then')
+      }
+      window.location.href = 'createtopicandmodule';
+    })
+    .catch(error => {
+      console.error('erro meu amigo', error)
+    })
+})
+
 var logout = document.getElementById('logout')
 logout.addEventListener('click', function () {
     fetch('logout')
