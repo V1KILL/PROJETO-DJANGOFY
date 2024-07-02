@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: formData,
             };
 
-            fetch('/createtopicandmodule/', requestOptions)
+            fetch('/createvideo/', requestOptions)
                 .then(response => {
                     if (response.ok) {
                         return response.text();
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 .then(data => {
                     console.log(data);
-                    
+                   
                     window.location.href = '/';
                 })
                 .catch(error => {

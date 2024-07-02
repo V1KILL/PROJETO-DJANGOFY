@@ -309,7 +309,40 @@ def ViewResponder(request):
     return render(request, 'videopage.html', context)
 
 def ViewCreateVideo(request):
-    return render(request, 'postar2.html')
+    topics = Topic.objects.all()
+    modules = Module.objects.all()
+
+    if request.method == 'POST':
+        titulo_video = request.POST["videotitle"]
+        descricao_video = request.POST['videodescription']
+        url_video = request.POST['videourl']
+        topic = request.POST['topicoption']
+        module = request.POST['moduleoption']
+        capa_video = request.FILES.get('thumbnail')
+        topic = Topic.objects.get(title=topic)
+        module = Module.objects.get(topic=topic, title= module)
+        video = Video.objects.create(module=module, title=titulo_video, description=descricao_video, url=url_video,image=capa_video)
+        video.save()
+        return redirect('/')
+    context = {
+        'modules':modules,
+        'topics':topics,
+    }
+    return render(request, 'postar2.html', context)
 
 def ViewCreateTopicAndModule(request):
+    if request.method == 'POST':
+        
+        titulo_topico = request.POST["topictitle"]
+        titulo_modulo = request.POST['moduletitle']
+        descricao_modulo = request.POST['moduledescription']
+        tipo_conteudo = request.POST['videoversion']
+        capa_modulo = request.FILES.get('thumbnail')
+        
+        topic = Topic.objects.create(title=titulo_topico)
+        module = Module.objects.create(title=titulo_modulo, description= descricao_modulo, topic=topic, image=capa_modulo, status=tipo_conteudo)
+        module.save()
+        print("ok")
+        return redirect('home')
+    
     return render(request, 'postar.html')

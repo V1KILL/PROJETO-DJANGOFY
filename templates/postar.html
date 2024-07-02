@@ -10,31 +10,35 @@
 <body>
     {% include 'header.html' %}
     <section>
-        <div>
-            <p>Tópico</p>
-            <input type="text" placeholder="Título">
-        </div>
-        <div>
-            <p>Módulo</p>
-            <input type="text" placeholder="Título">
-            <input type="text" placeholder="Descrição">
-        </div>
-        
-        <div>
-            <p>Capa do Módulo</p>
-            <input type="file" name="" id="">
-        </div>
-        <div>
-            <p>Tipo de Conteúdo</p>
-            <select name="" id="">
-                <option value="False">Gratuito</option>
-                <option value="Premium">Premium</option>
-            </select>
-        </div>
-        <div>
-            <input type="submit" value="Criar Vídeo">
-        </div>
+        <form id="myForm" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+                <p>Tópico</p>
+                <input type="text" placeholder="Título" name="topictitle" required>
+            </div>
+            <div>
+                <p>Módulo</p>
+                <input type="text" placeholder="Título" name="moduletitle"required>
+                <input type="text" placeholder="Descrição" name="moduledescription" required>
+            </div>
+            
+            <div>
+                <p>Capa do Módulo</p>
+                <input type="file" name="thumbnail" required>
+            </div>
+            <div>
+                <p>Tipo de Conteúdo</p>
+                <select name="videoversion">
+                    <option value="False">Gratuito</option>
+                    <option value="True">Premium</option>
+                </select>
+            </div>
+            <div>
+                <input type="submit" value="Criar Vídeo" required>
+            </div>
+        </form>
     </section>
+    <script src="../static/js/postar.js"></script>
     <script src="../static/js/script.js"></script>
 </body>
 </html>

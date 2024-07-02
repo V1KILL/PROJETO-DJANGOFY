@@ -10,41 +10,51 @@
 <body>
     {% include 'header.html' %}
     <section>
-        <div>
-            <p>Título do Vídeo</p>
-            <input type="text" placeholder="Título">
-        </div>
-        <div>
-            <p>Descrição do Vídeo</p>
-            <input type="text" placeholder="Descrição">
+        <form method="POST" id="myForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+                <p>Título do Vídeo</p>
+                <input type="text" placeholder="Título" required name="videotitle">
+            </div>
+            <div>
+                <p>Descrição do Vídeo</p>
+                <input type="text" placeholder="Descrição" required name="videodescription">
+                
+            </div>
+            <div>
+                <p>Url do Vídeo</p>
+                <input type="text" placeholder="Url" required name="videourl">   
+            </div>
             
-        </div>
-        <div>
-            <p>Url do Vídeo</p>
-            <input type="text" placeholder="Url">   
-        </div>
-        
-        <div>
-            <p>Capa do Vídeo</p>
-            <input type="file" name="" id="">
-        </div>
-        <div>
-            <p>Selecionar Tópico</p>
-            <select name="" id="">
-                <option value="False">English</option>
-                <option value="Premium">Programming</option>
-            </select>
-        </div>
-        <div>
-            <p>Módulo</p>
-            <select name="" id="">
-                <option value="False">30 dias</option>
-                <option value="Premium">60 dias</option>
-            </select>
-        </div>
-        >
+            <div>
+                <p>Capa do Vídeo</p>
+                <input type="file" name="thumbnail" required>
+            </div>
+            <div>
+                <p>Selecionar Tópico<p>
+    
+                <select name="topicoption" id="">
+                    {% for topic in topics %}
+                        <option value="{{topic.title}}">{{topic.title}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <p>Módulo</p>
+                <select name="moduleoption" id="">
+                    {% for topic in topics %}
+                        <optgroup label="{{topic.title}}">
+                            {% for module in topic.topics.all %}
+                                <option value="{{module.title}}">{{module.title}}</option>
+                            {% endfor %}
+                        </optgroup>
+                    {% endfor %}
+                </select>
+                <input type="submit">
+            </div>
+        </form>
         
     </section>
-    <script src="../static/js/script.js"></script>
+    <script src="../static/js/postar2.js"></script>
 </body>
 </html>
