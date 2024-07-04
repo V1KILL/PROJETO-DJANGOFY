@@ -1,11 +1,10 @@
+
+
 document.addEventListener('DOMContentLoaded', function () {
   var splides = document.querySelectorAll('.splide');
   splides.forEach(function(splide) {
-      var slideCount = splide.querySelectorAll('.splide__slide').length;
+      
       new Splide(splide, {
-          
-       
-       
         focus    : '0',
         autoWidth: true,
         pagination: false,
@@ -13,17 +12,19 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-var perfil = document.querySelector('.perfil');
-var options = document.querySelector('.perfil-image .options');
+document.addEventListener('DOMContentLoaded', function() {
+  var perfil = document.querySelector('.perfil-image');
+  var options = document.querySelector('.options');
 
-perfil.addEventListener('click', function() {
-
-  if (options.style.display === 'flex') {
-    options.style.display = 'none';
-  } else {
-    options.style.display = 'flex';
-  }
+  perfil.addEventListener('click', function() {
+    if (options.style.display === 'flex') {
+      options.style.display = 'none';
+    } else {
+      options.style.display = 'flex';
+    }
+  });
 });
+
 
 document.querySelectorAll('.module').forEach(module => {
   module.addEventListener('click', function() {
@@ -49,7 +50,7 @@ document.querySelectorAll('.module').forEach(module => {
         }
       })
       .then(html => {
-        console.log(html);
+        
         document.open();
         document.write(html);
         document.close();
@@ -78,13 +79,13 @@ logo.addEventListener('click', function () {
 
 var perfil = document.getElementById('perfil')
 perfil.addEventListener('click', function () {
-
-  fetch('perfil')
+  var url = this.getAttribute('data-url');
+  fetch(url)
     .then(response => {
       if (!response.ok) {
         throw new ERROR('Error Then')
       }
-      window.location.href = 'perfil';
+      window.location.href = url;
     })
     .catch(error => {
       console.error('erro meu amigo', error)
@@ -93,13 +94,14 @@ perfil.addEventListener('click', function () {
 
 var createvideo = document.getElementById('createvideo')
 createvideo.addEventListener('click', function () {
+  var url = this.getAttribute('data-url');
 
-  fetch('createvideo')
+  fetch(url)
     .then(response => {
       if (!response.ok) {
         throw new ERROR('Error Then')
       }
-      window.location.href = 'createvideo';
+      window.location.href = url;
     })
     .catch(error => {
       console.error('erro meu amigo', error)
@@ -108,13 +110,13 @@ createvideo.addEventListener('click', function () {
 
 var createtopicandmodule = document.getElementById('createtopicandmodule')
 createtopicandmodule.addEventListener('click', function () {
-
-  fetch('createtopicandmodule')
+  var url = this.getAttribute('data-url');
+  fetch(url)
     .then(response => {
       if (!response.ok) {
         throw new ERROR('Error Then')
       }
-      window.location.href = 'createtopicandmodule';
+      window.location.href = url;
     })
     .catch(error => {
       console.error('erro meu amigo', error)

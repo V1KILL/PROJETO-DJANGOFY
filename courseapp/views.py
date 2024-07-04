@@ -1,31 +1,28 @@
 from django.shortcuts import render, redirect
-from courseapp.models import Topic, Module, Comment, Video, UserProfile, User, Like, Check
-from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-import json
-import stripe
-from typing import Any
-from django.conf import settings
-from django.http import HttpResponse
-from django.views.generic import TemplateView, View
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.conf import settings
 from django.contrib.auth import logout, update_session_auth_hash
+from courseapp.models import Topic, Module, Comment, Video, UserProfile, User, Like, Check
+from django.views.generic import TemplateView, View
+import stripe
+import json
+from typing import Any
 
 @login_required(login_url='login')
 def Home(request):
     topics = Topic.objects.all()
     modules = Module.objects.all()
-
     user = UserProfile.objects.get(user=request.user)
-    print(user)
-    content = {
+    context = {
         'topics':topics,
         'modules':modules,
         'user':user,
     }
-    return render(request, 'index.html', content)
+    return render(request, 'index.html', context)
 
 def ViewLogin(request):
     if request.method == 'POST':
@@ -71,85 +68,90 @@ def ViewRegister(request):
 
 @login_required(login_url='login')
 def ViewLogout(request):
-    
     logout(request)
     return render(request, 'login.html')
 
+@login_required
 def Perfil(request):
-    user = User.objects.get(id=request.user.id)
-    user = UserProfile.objects.get(user=user)
+    user = UserProfile.objects.get(user_id=request.user.id)
     return render(request, 'perfil.html', {'user':user})
 
-@csrf_exempt
+@login_required
 def render_module(request):
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
-        module_id = data.get('moduleId')
-        print('Module ID recebido:', module_id)
-
-        module = Module.objects.get(id=module_id)
+        module = Module.objects.get(id=data.get('moduleId'))
         mainvideo = module.videos.first()
         like = Like.objects.filter(user=request.user, video=mainvideo).exists()
+        check = Check.objects.filter(user=request.user, video=mainvideo)
         comments = Comment.objects.filter(video=mainvideo)
-        videos = Video.objects.filter(module = module)
-        likes = Like.objects.all().filter(video=mainvideo)
-        check = Check.objects.filter(video=mainvideo, user=request.user)
+        videos = Video.objects.filter(module=module).select_related('module')
+        likes = Like.objects.filter(video=mainvideo)
         user = UserProfile.objects.get(user=request.user)
-        return render(request, 'videopage.html', {'module': module, 'mainvideo':mainvideo, 'comments':comments, 'videos':videos, 'like':like, 'likes':likes, 'check':check, 'user':user})
-    else:
-        return JsonResponse({'error': 'Método não permitido'}, status=405)
-
-
-@csrf_exempt
-def render_video(request):
-    if request.method == 'POST':
-        data = json.loads(request.body.decode('utf-8'))
-        video_id = data.get('videoId')
-        topicId = data.get('topicId')
-        moduleId = data.get('moduleId')
-        print('Video ID recebido:', video_id)
-        print(f'topic id{ topicId}')
-        topic = Topic.objects.get(id=topicId)
-        module = Module.objects.get(topic=topic, id=moduleId)
-        video = Video.objects.get(id=video_id, module=module)
-        comments = Comment.objects.filter(video=video)
-        videos = Video.objects.filter(module=module)
-        likes = Like.objects.all().filter(video=video)
-        like = Like.objects.filter(user=request.user, video=video)
-        check = Check.objects.filter(user=request.user, video=video)
-        user = UserProfile.objects.get(user=request.user)
-        
         context = {
-            'mainvideo': video,
-            'comments': comments,
-            'videos': videos,
-            'likes':likes,
-            'module':module,
+            'mainvideo':mainvideo, 
             'like':like,
             'check':check,
+            'comments':comments,
+            'videos':videos,
+            'likes':likes,
+            'module': module,
             'user':user,
         }
         return render(request, 'videopage.html', context)
     else:
         return JsonResponse({'error': 'Método não permitido'}, status=405)
 
-def ViewLike(request):
-    print('tudo certo')
-    data = json.loads(request.body.decode('utf-8'))
-    moduleId = data.get('moduleId')
-    videoId = data.get('videoId')
-    topicId = data.get('topicId')
 
-    topic = Topic.objects.get(id=topicId)
-    module = Module.objects.get(topic=topic, id=moduleId)
-    mainvideo = Video.objects.get(module=module, id=videoId)
+@csrf_exempt
+@login_required
+def render_video(request):
+    if request.method == 'POST':
+        data = json.loads(request.body.decode('utf-8'))
+
+        topic = Topic.objects.get(id=data.get('topicId'))
+        module = Module.objects.get(topic=topic, id=data.get('moduleId'))
+        mainvideo = Video.objects.get(id=data.get('videoId'), module=module)
+
+        comments = Comment.objects.filter(video=mainvideo)
+        videos = Video.objects.filter(module=module)
+        likes = Like.objects.filter(video=mainvideo)
+        like = Like.objects.filter(user=request.user, video=mainvideo)
+        check = Check.objects.filter(user=request.user, 
+        video=mainvideo)
+        user_profile = UserProfile.objects.get(user=request.user)
+        
+        context = {
+            'mainvideo': mainvideo,
+            'like':like,
+            'check':check,
+            'comments': comments,
+            'videos': videos,
+            'likes':likes,
+            'module':module,
+            'user':user_profile,
+        }
+
+        return render(request, 'videopage.html', context)
+    
+    else:
+        return JsonResponse({'error': 'Método não permitido'}, status=405)
+
+@login_required
+def ViewLike(request):
+    data = json.loads(request.body.decode('utf-8'))
+
+    topic = Topic.objects.get(id=data.get('topicId'))
+    module = Module.objects.get(topic=topic, id=data.get('moduleId'))
+    mainvideo = Video.objects.get(module=module, id=data.get('videoId'))
 
     like = Like.objects.filter(user=request.user, video=mainvideo)
-    likes = Like.objects.all().filter(video=mainvideo)
-    videos = Video.objects.filter(module=module)
-    comments = Comment.objects.filter(video=mainvideo)
     check = Check.objects.filter(user=request.user, video=mainvideo)
-    user = UserProfile.objects.get(user=request.user)
+    comments = Comment.objects.filter(video=mainvideo)
+    videos = Video.objects.filter(module=module)
+    likes = Like.objects.filter(video=mainvideo)
+    user_profile = UserProfile.objects.get(user=request.user)
+
     if like:
         like.delete()
     else:
@@ -157,35 +159,33 @@ def ViewLike(request):
         like.save()
 
     context = {
+        'mainvideo': mainvideo,
         'like':like,
+        'check':check,
+        'comments': comments,
+        'videos':videos,
         'likes':likes,
         'module':module,
-        'mainvideo': mainvideo,
-        'videos':videos,
-        'comments': comments,
-        'check':check,
-        'user':user,
+        'user':user_profile,
     }
 
     return render(request, 'videopage.html', context)
 
+@login_required
 def ViewCheck(request):
-    print('tudo certo')
     data = json.loads(request.body.decode('utf-8'))
-    moduleId = data.get('moduleId')
-    videoId = data.get('videoId')
-    topicId = data.get('topicId')
 
-    topic = Topic.objects.get(id=topicId)
-    module = Module.objects.get(topic=topic, id=moduleId)
-    mainvideo = Video.objects.get(module=module, id=videoId)
+    topic = Topic.objects.get(id=data.get('topicId'))
+    module = Module.objects.get(topic=topic, id=data.get('moduleId'))
+    mainvideo = Video.objects.get(module=module, id=data.get('videoId'))
 
-    check = Check.objects.filter(user=request.user, video=mainvideo)
     like = Like.objects.filter(user=request.user, video=mainvideo)
-    videos = Video.objects.filter(module=module)
+    check = Check.objects.filter(user=request.user, video=mainvideo)
     comments = Comment.objects.filter(video=mainvideo)
-    likes = Like.objects.all().filter(video=mainvideo)
+    likes = Like.objects.filter(video=mainvideo)
+    videos = Video.objects.filter(module=module)
     user = UserProfile.objects.get(user=request.user)
+
     if check:
         check.delete()
     else:
@@ -193,13 +193,13 @@ def ViewCheck(request):
         check.save()
 
     context = {
-        'check':check,
-        'module':module,
-        'like':like,
-        'likes':likes,
         'mainvideo': mainvideo,
-        'videos':videos,
+        'like':like,
+        'check':check,
         'comments': comments,
+        'module':module,
+        'videos':videos,
+        'likes':likes,
         'user':user,
     }
 
@@ -241,35 +241,34 @@ class CreateCheckoutSessionView(View):
         )
 
 @csrf_exempt
+@login_required
 def ViewComentar(request):
-    print('cheguei')
+    
     data = json.loads(request.body.decode('utf-8'))
-    comentario = data.get("comentario")
-    moduleId = data.get('moduleId')
-    videoId = data.get('videoId')
-    topicId = data.get('topicId')
-    print(comentario)
 
-    topic = Topic.objects.get(id=topicId)
-    module = Module.objects.get(topic=topic, id=moduleId)
-    mainvideo = Video.objects.get(module=module, id=videoId)
-    user = UserProfile.objects.get(user=request.user)
-    comentario = Comment.objects.create(user= user, text=comentario, video=mainvideo)
-    comentario.save()
-    check = Check.objects.filter(user=request.user, video=mainvideo)
+    topic = Topic.objects.get(id=data.get('topicId'))
+    module = Module.objects.get(topic=topic, id= data.get('moduleId'))
+    mainvideo = Video.objects.get(module=module, id=data.get('videoId'))
+
     like = Like.objects.filter(user=request.user, video=mainvideo)
+    check = Check.objects.filter(user=request.user, video=mainvideo)
     videos = Video.objects.filter(module=module)
     comments = Comment.objects.filter(video=mainvideo)
     likes = Like.objects.all().filter(video=mainvideo)
+    user_profile = UserProfile.objects.get(user=request.user)
+    
+    comentario = Comment.objects.create(user= user_profile, text=data.get("comentario"), video=mainvideo)
+    comentario.save()
+
     context = {
+        'mainvideo': mainvideo,
+        'like':like,
         'check':check,
         'module':module,
-        'like':like,
         'likes':likes,
-        'mainvideo': mainvideo,
         'videos':videos,
         'comments': comments,
-        'user':user
+        'user':user_profile,
     }
     return render(request, 'videopage.html', context)
 
@@ -311,6 +310,7 @@ def ViewResponder(request):
 def ViewCreateVideo(request):
     topics = Topic.objects.all()
     modules = Module.objects.all()
+    user = UserProfile.objects.get(user=request.user)
 
     if request.method == 'POST':
         titulo_video = request.POST["videotitle"]
@@ -323,10 +323,11 @@ def ViewCreateVideo(request):
         module = Module.objects.get(topic=topic, title= module)
         video = Video.objects.create(module=module, title=titulo_video, description=descricao_video, url=url_video,image=capa_video)
         video.save()
-        return redirect('/')
+        return redirect('home')
     context = {
         'modules':modules,
         'topics':topics,
+        'user':user,
     }
     return render(request, 'postar2.html', context)
 
@@ -345,4 +346,5 @@ def ViewCreateTopicAndModule(request):
         print("ok")
         return redirect('home')
     
-    return render(request, 'postar.html')
+    user = UserProfile.objects.get(user=request.user)
+    return render(request, 'postar.html', {'user':user})

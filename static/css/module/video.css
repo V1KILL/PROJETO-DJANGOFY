@@ -80,3 +80,15 @@ iframe {
 .buttons .check {
     background-color: #3F3F3F;
 }
+
+.mainvideo .without {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.4em;
+    width: 100%;
+    font-weight: 600;
+    height: 500px;
+    background-color: #3F3F3F;
+}

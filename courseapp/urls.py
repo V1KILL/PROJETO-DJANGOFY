@@ -19,9 +19,6 @@ urlpatterns = [
     path('responder/', ViewResponder, name='responder'),
     path('createvideo/', ViewCreateVideo, name='createvideo'),
     path('createtopicandmodule/', ViewCreateTopicAndModule, name='createtopicandmodule'),
-
-
-
 ]
 
 

@@ -1,10 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
-    new Splide('.splide', {
-        type   : 'loop',
-        perPage: 3,
-        autoplay: true,
-    }).mount();
-});
+
 
 var likeButton = document.querySelector('.buttons a.like');
 document.addEventListener('DOMContentLoaded', function() {
@@ -51,34 +45,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-});
-
-var logo = document.getElementById('logo')
-logo.addEventListener('click', function () {
-
-  fetch('/')
-    .then(response => {
-      if (!response.ok) {
-        throw new ERROR('Error Then')
-      }
-      window.location.href = '/';
-    })
-    .catch(error => {
-      console.error('erro meu amigo', error)
-    })
-
-})
-
-var perfil = document.querySelector('.perfil');
-var options = document.querySelector('.perfil-image .options');
-
-perfil.addEventListener('click', function() {
-
-  if (options.style.display === 'flex') {
-    options.style.display = 'none';
-  } else {
-    options.style.display = 'flex';
-  }
 });
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -248,7 +214,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     })
                     .then(html => {
-                        console.log(html);
+                        
                         document.open();
                         document.write(html);
                         document.close();
@@ -260,4 +226,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-

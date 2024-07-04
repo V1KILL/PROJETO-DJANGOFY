@@ -64,6 +64,7 @@ header .perfil .perfil-image .options {
     top: 25px;
     right: 20px;
     background-color: black;
+    z-index: 1;
 }
 
 header .perfil .perfil-image .options p {

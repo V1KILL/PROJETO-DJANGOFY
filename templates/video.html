@@ -1,12 +1,18 @@
 <div class="mainvideo">
-                
+    {% if not mainvideo.url %}
+    <div class="without">
+        <p>Vídeos Em Breve!</p>
+    </div>
+    {% endif %}
                
     {{mainvideo.url|safe}}
     
     <div class="mainvideotext">
         <p>{{mainvideo.title}}</p>
         
-        <span>{{mainvideo.description}}</span>
+        <span>
+            {{mainvideo.description}}
+        </span>
     </div>
     <div class="buttons">
         {% if check %}
