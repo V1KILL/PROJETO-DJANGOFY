@@ -40,7 +40,6 @@ def ViewLogin(request):
             return redirect('login')
     return render(request, 'login.html')
 
-
 def ViewRegister(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -77,9 +76,10 @@ def Perfil(request):
     return render(request, 'perfil.html', {'user':user})
 
 @login_required
-def render_module(request):
+def ViewRenderModule(request):
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
+
         module = Module.objects.get(id=data.get('moduleId'))
         mainvideo = module.videos.first()
         like = Like.objects.filter(user=request.user, video=mainvideo).exists()
@@ -87,7 +87,8 @@ def render_module(request):
         comments = Comment.objects.filter(video=mainvideo)
         videos = Video.objects.filter(module=module).select_related('module')
         likes = Like.objects.filter(video=mainvideo)
-        user = UserProfile.objects.get(user=request.user)
+        user_profile = UserProfile.objects.get(user=request.user)
+
         context = {
             'mainvideo':mainvideo, 
             'like':like,
@@ -96,16 +97,15 @@ def render_module(request):
             'videos':videos,
             'likes':likes,
             'module': module,
-            'user':user,
+            'user':user_profile,
         }
         return render(request, 'videopage.html', context)
     else:
         return JsonResponse({'error': 'Método não permitido'}, status=405)
 
-
 @csrf_exempt
 @login_required
-def render_video(request):
+def ViewRenderVideo(request):
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
 
@@ -243,7 +243,6 @@ class CreateCheckoutSessionView(View):
 @csrf_exempt
 @login_required
 def ViewComentar(request):
-    
     data = json.loads(request.body.decode('utf-8'))
 
     topic = Topic.objects.get(id=data.get('topicId'))
@@ -257,7 +256,7 @@ def ViewComentar(request):
     likes = Like.objects.all().filter(video=mainvideo)
     user_profile = UserProfile.objects.get(user=request.user)
     
-    comentario = Comment.objects.create(user= user_profile, text=data.get("comentario"), video=mainvideo)
+    comentario = Comment.objects.create(user= user_profile, text=data.get('comentario'), video=mainvideo)
     comentario.save()
 
     context = {
@@ -272,79 +271,68 @@ def ViewComentar(request):
     }
     return render(request, 'videopage.html', context)
 
+@login_required
 def ViewResponder(request):
-    print('cheguei')
     data = json.loads(request.body.decode('utf-8'))
-    resposta = data.get("comentario")
-    moduleId = data.get('moduleId')
-    videoId = data.get('videoId')
-    topicId = data.get('topicId')
-    comentarioId = data.get('comentarioId')
-   
 
-    topic = Topic.objects.get(id=topicId)
-    module = Module.objects.get(topic=topic, id=moduleId)
-    mainvideo = Video.objects.get(module=module, id=videoId)
-    user = UserProfile.objects.get(user=request.user)
-    comentario = Comment.objects.get(video=mainvideo, id=comentarioId)
-    response = Comment.objects.create(video=mainvideo, text=resposta, user=user, response=comentario)
+    topic = Topic.objects.get(id=data.get('topicId'))
+    module = Module.objects.get(topic=topic, id=data.get('moduleId'))
+    mainvideo = Video.objects.get(module=module, id=data.get('videoId'))
+    user_profile = UserProfile.objects.get(user=request.user)
+
+    comentario = Comment.objects.get(video=mainvideo, id=data.get('comentarioId'))
+    response = Comment.objects.create(video=mainvideo, text=data.get("comentario"), user=user_profile, response=comentario)
     response.save()
     
-    check = Check.objects.filter(user=request.user, video=mainvideo)
     like = Like.objects.filter(user=request.user, video=mainvideo)
+    check = Check.objects.filter(user=request.user, video=mainvideo)
     videos = Video.objects.filter(module=module)
     comments = Comment.objects.filter(video=mainvideo)
-    likes = Like.objects.all().filter(video=mainvideo)
+    likes = Like.objects.filter(video=mainvideo)
+
     context = {
-        'check':check,
-        'module':module,
-        'like':like,
-        'likes':likes,
         'mainvideo': mainvideo,
+        'like':like,
+        'check':check,
         'videos':videos,
         'comments': comments,
-        'user':user,
+        'module':module,
+        'likes':likes,
+        'user':user_profile,
         }
+    
     return render(request, 'videopage.html', context)
 
+@login_required
 def ViewCreateVideo(request):
     topics = Topic.objects.all()
     modules = Module.objects.all()
-    user = UserProfile.objects.get(user=request.user)
+    user_profile = UserProfile.objects.get(user=request.user)
 
     if request.method == 'POST':
-        titulo_video = request.POST["videotitle"]
-        descricao_video = request.POST['videodescription']
-        url_video = request.POST['videourl']
-        topic = request.POST['topicoption']
-        module = request.POST['moduleoption']
-        capa_video = request.FILES.get('thumbnail')
-        topic = Topic.objects.get(title=topic)
-        module = Module.objects.get(topic=topic, title= module)
-        video = Video.objects.create(module=module, title=titulo_video, description=descricao_video, url=url_video,image=capa_video)
+
+        topic = Topic.objects.get(title=request.POST['topicoption'])
+        module = Module.objects.get(topic=topic, title= request.POST['moduleoption'])
+        video = Video.objects.create(module=module, title=request.POST["videotitle"], description=request.POST['videodescription'], url=request.POST['videourl'],image=request.FILES.get('thumbnail'))
         video.save()
         return redirect('home')
+    
     context = {
         'modules':modules,
         'topics':topics,
-        'user':user,
+        'user':user_profile,
     }
+
     return render(request, 'postar2.html', context)
 
+@login_required
 def ViewCreateTopicAndModule(request):
     if request.method == 'POST':
         
-        titulo_topico = request.POST["topictitle"]
-        titulo_modulo = request.POST['moduletitle']
-        descricao_modulo = request.POST['moduledescription']
-        tipo_conteudo = request.POST['videoversion']
-        capa_modulo = request.FILES.get('thumbnail')
-        
-        topic = Topic.objects.create(title=titulo_topico)
-        module = Module.objects.create(title=titulo_modulo, description= descricao_modulo, topic=topic, image=capa_modulo, status=tipo_conteudo)
+        topic = Topic.objects.create(title=request.POST["topictitle"])
+        module = Module.objects.create(title=request.POST['moduletitle'], description= request.POST['moduledescription'], topic=topic, image=request.FILES.get('thumbnail'), status=request.POST['videoversion'])
         module.save()
-        print("ok")
         return redirect('home')
     
-    user = UserProfile.objects.get(user=request.user)
-    return render(request, 'postar.html', {'user':user})
+    user_profile = UserProfile.objects.get(user=request.user)
+    return render(request, 'postar.html', {'user':user_profile})
