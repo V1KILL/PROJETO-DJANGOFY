@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: formData,
             };
 
-            fetch('/createvideo/', requestOptions)
+            fetch('/new-video/', requestOptions)
                 .then(response => {
                     if (response.ok) {
                         return response.text();

@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: formData,
             };
 
-            fetch('/createtopicandmodule/', requestOptions)
+            fetch('/new-topic-and-module/', requestOptions)
                 .then(response => {
                     if (response.ok) {
                         return response.text();

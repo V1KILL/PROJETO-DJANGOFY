@@ -10,6 +10,7 @@
                         <li class="splide__slide">
                             <div class="module" data-id='{{ module.id }}'  data-status="{{ module.status }}">
                                 <div class="module-image">
+
                                     {% if user.status %}
                                         <img src="{{module.image.url}}" alt="">
                                         <div class="overlay"></div>
@@ -27,9 +28,11 @@
                                         {% endif %}
                                     {% endif %}
                                 </div>
+
                                 <p class="module-title">{{module.title}}</p>
                                 <p class="module-description">{{module.description}}</p>
                                 <p class="chess">Djangofy.com Team</p>
+                                
                                 <div class="details">
                                     <div class="detail">
                                         <i class="fa-solid fa-user-graduate"></i>
@@ -39,7 +42,6 @@
                                         <i class="fa-solid fa-calendar-days"></i>
                                         <p>{{module.formatted_date}}</p>
                                     </div>
-                                    
                                 </div>
                             </div>
                         </li>
@@ -47,8 +49,6 @@
                     </ul>
                 </div>
             </div>
-                
-            
         {% endfor %}
     </article>
 </section>

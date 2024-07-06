@@ -1,26 +1,26 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="static/img/listmind.png" type="image/x-icon">
-    <title>Logar - ListMind</title>
-    <link rel="stylesheet" href="../static/css/account.css">
-    <link rel="stylesheet" href="../static/css/responsive.css">
-    <link rel="stylesheet" href="../static/css/animation.css">
+    <title>Signin - Djangofy</title>
+    <link rel="stylesheet" href="{% static 'css/account/account.css' %}">
+    
 </head>
 <body>
     <section id="CandLogin">
         <div class="form">
             <h1>Logar</h1>
-            <form action="{% url 'login' %}" method="POST">
+            <form action="{% url 'signin' %}" method="POST">
                 {% csrf_token %}
                 <input type="text" name="username" placeholder="Nome de Usuário" required minlength="8">
                 <input type="password" name="password" id="" placeholder="Senha" required minlength="8">
                 {% for message in messages %}
                 <h3 class="messages">{{message}}</h3>
                 {% endfor %}
-                <a href="register">Eu não tenho uma conta</a>
+                <a href="/signup">Eu não tenho uma conta</a>
                 
                 <input id="submit" type="submit" value="Logar">
             </form>

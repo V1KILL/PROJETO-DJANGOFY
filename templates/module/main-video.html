@@ -16,12 +16,12 @@
     </div>
     <div class="buttons">
         {% if check %}
-            <a style="background-color: #44B78B;" data-moduleid="{{ module.id }}" data-videoid="{{ mainvideo.id }}" data-topicid="{{ module.topic.id }}" class="check">Marcado</a>
+            <a class="check" style="background-color: #44B78B;" data-moduleid="{{ module.id }}" data-videoid="{{ mainvideo.id }}" data-topicid="{{ module.topic.id }}">Marcado</a>
         {% else %}
             <a class="check" data-moduleid="{{ module.id }}" data-videoid="{{ mainvideo.id }}" data-topicid="{{ module.topic.id }}">Marcar</a>
         {% endif %}
         {% if like %}
-            <a style="background-color: #ff0000;" class="like" data-moduleid="{{ module.id }}" data-videoid="{{ mainvideo.id }}" data-topicid="{{ module.topic.id }}"><i class="fa-regular fa-heart"></i>{{ likes.count }}</a>
+            <a class="like" style="background-color: #ff0000;" data-moduleid="{{ module.id }}" data-videoid="{{ mainvideo.id }}" data-topicid="{{ module.topic.id }}"><i class="fa-regular fa-heart"></i>{{ likes.count }}</a>
         {% else %}
             <a class="like" data-moduleid="{{ module.id }}" data-videoid="{{ mainvideo.id }}" data-topicid="{{ module.topic.id }}"><i class="fa-regular fa-heart"></i>{{ likes.count }}</a>
         {% endif %}
@@ -29,5 +29,4 @@
         <span><a class="fa-solid fa-arrow-left"></a><a class="fa-solid fa-arrow-right"></a></span>
         <a href="">Editar Vídeo</a>
     </div>
-    
 </div>

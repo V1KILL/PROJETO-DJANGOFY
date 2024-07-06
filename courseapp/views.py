@@ -12,8 +12,8 @@ import stripe
 import json
 from typing import Any
 
-@login_required(login_url='login')
-def Home(request):
+@login_required(login_url='signin')
+def ViewHome(request):
     topics = Topic.objects.all()
     modules = Module.objects.all()
     user = UserProfile.objects.get(user=request.user)
@@ -22,9 +22,9 @@ def Home(request):
         'modules':modules,
         'user':user,
     }
-    return render(request, 'index.html', context)
+    return render(request, 'home/home.html', context)
 
-def ViewLogin(request):
+def ViewSignin(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -34,13 +34,13 @@ def ViewLogin(request):
             return redirect('home')
         elif user is not None and not user.check_password(password):
             messages.info(request, 'Senha Incorreta')
-            return redirect('login')
+            return redirect('signin')
         else:
             messages.info(request, 'Usuário Não Existe')
-            return redirect('login')
-    return render(request, 'login.html')
+            return redirect('signin')
+    return render(request, 'account/signin.html')
 
-def ViewRegister(request):
+def ViewSignup(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -48,32 +48,32 @@ def ViewRegister(request):
         if password == password2:
             if username.isspace():
                 messages.info(request, 'Nome Vazio')
-                return redirect('register')
+                return redirect('signup')
             else:
                 if User.objects.filter(username=username).exists():
                     messages.info(request, 'Nome Existente')
-                    return redirect('register')
+                    return redirect('signup')
                 else:
                     user = User.objects.create_user(username=username, password=password)
                     user.save()
                     UserProfile.objects.create(user=user)
                     messages.info(request, 'Conta Criada com Sucesso')
-                    return redirect('login')
+                    return redirect('signin')
         else:
             messages.info(request, 'Senhas não coincidem')
             return redirect('register')
     else:
-        return render(request, 'signup.html')
+        return render(request, 'account/signup.html')
 
-@login_required(login_url='login')
+@login_required(login_url='signin')
 def ViewLogout(request):
     logout(request)
-    return render(request, 'login.html')
+    return render(request, 'account/signin.html')
 
 @login_required
-def Perfil(request):
+def ViewPerfil(request):
     user = UserProfile.objects.get(user_id=request.user.id)
-    return render(request, 'perfil.html', {'user':user})
+    return render(request, 'visit-profile.html', {'user':user})
 
 @login_required
 def ViewRenderModule(request):
@@ -99,7 +99,7 @@ def ViewRenderModule(request):
             'module': module,
             'user':user_profile,
         }
-        return render(request, 'videopage.html', context)
+        return render(request, 'module/video-page.html', context)
     else:
         return JsonResponse({'error': 'Método não permitido'}, status=405)
 
@@ -132,7 +132,7 @@ def ViewRenderVideo(request):
             'user':user_profile,
         }
 
-        return render(request, 'videopage.html', context)
+        return render(request, 'module/video-page.html', context)
     
     else:
         return JsonResponse({'error': 'Método não permitido'}, status=405)
@@ -169,7 +169,7 @@ def ViewLike(request):
         'user':user_profile,
     }
 
-    return render(request, 'videopage.html', context)
+    return render(request, 'module/video-page.html', context)
 
 @login_required
 def ViewCheck(request):
@@ -203,7 +203,7 @@ def ViewCheck(request):
         'user':user,
     }
 
-    return render(request, 'videopage.html', context)
+    return render(request, 'module/video-page.html', context)
 
 class SuccessView(TemplateView):
     template_name = 'success.html'
@@ -242,7 +242,7 @@ class CreateCheckoutSessionView(View):
 
 @csrf_exempt
 @login_required
-def ViewComentar(request):
+def ViewComment(request):
     data = json.loads(request.body.decode('utf-8'))
 
     topic = Topic.objects.get(id=data.get('topicId'))
@@ -269,10 +269,10 @@ def ViewComentar(request):
         'comments': comments,
         'user':user_profile,
     }
-    return render(request, 'videopage.html', context)
+    return render(request, 'module/video-page.html', context)
 
 @login_required
-def ViewResponder(request):
+def ViewReply(request):
     data = json.loads(request.body.decode('utf-8'))
 
     topic = Topic.objects.get(id=data.get('topicId'))
@@ -301,10 +301,10 @@ def ViewResponder(request):
         'user':user_profile,
         }
     
-    return render(request, 'videopage.html', context)
+    return render(request, 'module/video-page.html', context)
 
 @login_required
-def ViewCreateVideo(request):
+def ViewNewVideo(request):
     topics = Topic.objects.all()
     modules = Module.objects.all()
     user_profile = UserProfile.objects.get(user=request.user)
@@ -323,10 +323,10 @@ def ViewCreateVideo(request):
         'user':user_profile,
     }
 
-    return render(request, 'postar2.html', context)
+    return render(request, 'new-video.html', context)
 
 @login_required
-def ViewCreateTopicAndModule(request):
+def ViewNewTopicAndModule(request):
     if request.method == 'POST':
         
         topic = Topic.objects.create(title=request.POST["topictitle"])
@@ -335,4 +335,4 @@ def ViewCreateTopicAndModule(request):
         return redirect('home')
     
     user_profile = UserProfile.objects.get(user=request.user)
-    return render(request, 'postar.html', {'user':user_profile})
+    return render(request, 'new-topic-and-module.html', {'user':user_profile})

@@ -1,5 +1,5 @@
-/*Reset*/
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
 * {
     padding: 0px;
     margin: 0px;
@@ -14,7 +14,7 @@ body {
     height: 100vh;
     background-color: #ccccce;
 }
-/*Div Principal*/
+
 section#CandLogin {
     display: flex;
     width: 80%;
@@ -22,7 +22,6 @@ section#CandLogin {
     animation: flutuar 2s infinite;
 }
 
-/*Div Formulário*/
 .form {
     display: flex;
     justify-content: center;
@@ -35,13 +34,11 @@ section#CandLogin {
     border-radius: 8px
 }
 
-/*Título Login*/
 .form h1 {
     color: #333333;
     font-size: 2.1em;
 }
 
-/*Formulário*/
 .form form {
     display: flex;
     flex-direction: column;
@@ -49,14 +46,12 @@ section#CandLogin {
     width: 100%;
 }
 
-/*Botão ("Já Possuo uma Conta")*/
 .form form a {
     align-self: flex-end;
     font-weight: 600;
     color: #333333;
 }
 
-/*Inputs*/
 .form form input {
     outline: none;
     border: none;
@@ -70,7 +65,6 @@ section#CandLogin {
     color: grey;
 }
 
-/*Input Submit*/
 .form form input#submit {
     color: white;
     background-color: #333333;
@@ -80,13 +74,11 @@ section#CandLogin {
     transition: 0.4s ease;
 }
 
-/*Messages*/
 .messages {
     color: #19C37D;
     font-size: 0.8em;
 }
 
-/*Aplicativo*/
 @media screen and (min-width: 720px) and (max-width: 1920px) {
     section {
         margin: auto;
@@ -98,7 +90,6 @@ section#CandLogin {
         box-shadow: 0.5px 0.5px 4px rgba(255, 255, 255, 0.5);
     }
 }
-
 
 /*Login e Cadastro*/
 

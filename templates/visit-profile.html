@@ -1,23 +1,24 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../static/css/perfil/perfil.css">
-    <link rel="stylesheet" href="../static/css/index/header.css">
+    <title>{{request.user.username}}</title>
+    <link rel="stylesheet" href="{% static 'css/perfil/visit-profile.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index/header.css' %}">
 </head>
 <body>
-    {% include 'header.html' %}
+    {% include 'home/header.html' %}
     <section>
         <article>
             <p>Informações</p>
             <form action="">
                 <label for="name">Nome<input type="text" name="name" id="" value="{{request.user.username}}"></label>
-                
                 <button type="submit">Salvar</button>
             </form>
         </article>
+
         <article>
             <p>Editar Senha</p>
             <form action="">
@@ -25,12 +26,12 @@
                 <label for="password2">Confirmar Senha<input type="password" name="password2" id=""></label>
                 <button type="submit">Salvar</button>
             </form>
+
             <p>Foto de Perfil</p>
             <form action="">
                 <label for="image"><input type="file" name="image"></label>
-                
             </form>
     </section>
-    <script src="../static/js/script.js"></script>
+    <script src="{% static 'js/home.js' %}"></script>
 </body>
 </html>

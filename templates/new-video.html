@@ -1,26 +1,30 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vídeo</title>
-    <link rel="stylesheet" href="../static/css/postar/postar.css">
-    <link rel="stylesheet" href="../static/css/index/header.css">
+    <link rel="stylesheet" href="{% static 'css/postar/new-topic-module-and-video.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index/header.css' %}">
 </head>
 <body>
-    {% include 'header.html' %}
+    {% include 'home/header.html' %}
     <section>
         <form method="POST" id="myForm" enctype="multipart/form-data">
+            
             {% csrf_token %}
+
             <div>
                 <p>Título do Vídeo</p>
                 <input type="text" placeholder="Título" required name="videotitle">
             </div>
+
             <div>
                 <p>Descrição do Vídeo</p>
                 <input type="text" placeholder="Descrição" required name="videodescription">
-                
             </div>
+
             <div>
                 <p>Url do Vídeo</p>
                 <input type="text" placeholder="Url" required name="videourl">   
@@ -30,15 +34,16 @@
                 <p>Capa do Vídeo</p>
                 <input type="file" name="thumbnail" required>
             </div>
+
             <div>
                 <p>Selecionar Tópico<p>
-    
                 <select name="topicoption" id="">
                     {% for topic in topics %}
                         <option value="{{topic.title}}">{{topic.title}}</option>
                     {% endfor %}
                 </select>
             </div>
+
             <div>
                 <p>Módulo</p>
                 <select name="moduleoption" id="">
@@ -52,10 +57,10 @@
                 </select>
                 <input type="submit">
             </div>
+
         </form>
-        
     </section>
-    <script src="../static/js/postar2.js"></script>
-    <script src="../static/js/script.js"></script>
+    <script src="{% static 'js/new-video' %}"></script>
+    <script src="{% static 'js/home.js' %}"></script>
 </body>
 </html>

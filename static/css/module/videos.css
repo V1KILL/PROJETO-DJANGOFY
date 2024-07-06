@@ -48,6 +48,7 @@
     object-position: center;
     border-radius: 16px;
 }
+
 @media (max-width: 412px) {
     section {
         flex-direction: column;
@@ -63,7 +64,6 @@
         flex-direction: column;
         gap: 5px;
         max-width: 100%;
-        
         padding: 20px;
         transition: 0.4s;
     }
@@ -79,6 +79,11 @@
         flex-direction: column;
         
     }
+
+    .videoimage img {
+        max-height: 500px;
+    }
+
     iframe {
         width: 100%;
         max-height: 500px;

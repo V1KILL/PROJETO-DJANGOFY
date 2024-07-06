@@ -1,0 +1,23 @@
+<header>
+
+    <a id="logo">Djangofy</a>
+    <div class="perfil">
+
+        <div class="perfil-image">
+            <img src="{{user.profileimg.url}}" alt="">
+            <div class="options">
+                
+                <p id="new-topic-and-module" data-url="{% url 'new-topic-and-module' %}">Criar Tópico e Módulo</p>
+
+                <p id="new-video" data-url="{% url 'new-video' %}">Criar Vídeo</p>
+
+                <p id="visit-perfil" data-url="{% url 'perfil' %}">Perfil</p>
+
+                <p id="logout" data-url="{% url 'logout' %}">Sair</p>
+            </div>
+        </div>
+        {% if not user.status %}
+            <a>Premium</a>
+        {% endif %}
+    </div>
+</header>
