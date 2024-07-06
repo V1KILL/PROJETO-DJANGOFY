@@ -336,3 +336,58 @@ def ViewNewTopicAndModule(request):
     
     user_profile = UserProfile.objects.get(user=request.user)
     return render(request, 'new-topic-and-module.html', {'user':user_profile})
+
+@login_required
+def ViewVideoEditPage(request):
+
+    data = json.loads(request.body.decode('utf-8'))
+
+    topic = Topic.objects.get(id=data.get('topicId'))
+    
+    module = Module.objects.get(topic=topic, id=data.get('moduleId'))
+
+    mainvideo = Video.objects.get(module=module, id=data.get('videoId'))
+
+    user_profile = UserProfile.objects.get(user=request.user)
+    context = {
+        'mainvideo':mainvideo,
+        'user':user_profile,
+    }
+    return render(request, 'video-edit-page.html', context)
+
+@csrf_exempt
+def ViewVideoEdit(request):
+    if request.method == 'POST':
+        print('Request received')
+        
+        try:
+            topic_id = request.POST.get('topicId')
+            module_id = request.POST.get('moduleId')
+            video_id = request.POST.get('videoId')
+            print(f'topicId: {topic_id}, moduleId: {module_id}, videoId: {video_id}')
+
+            topic = Topic.objects.get(id=topic_id)
+            module = Module.objects.get(topic=topic, id=module_id)
+            mainvideo = Video.objects.get(module=module, id=video_id)
+
+            title = request.POST.get('title')
+            description = request.POST.get('description')
+            url = request.POST.get('url')
+            capa = request.FILES.get('capa')
+
+            print(f'title: {title}, description: {description}, url: {url}, capa: {capa}')
+
+            mainvideo.title = title
+            mainvideo.description = description
+            mainvideo.url = url
+
+            if capa:
+                mainvideo.capa = capa
+            mainvideo.save()
+
+            print('Video updated successfully')
+            return JsonResponse({'success': True})
+        except Exception as e:
+            print(f'Error: {e}')
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})

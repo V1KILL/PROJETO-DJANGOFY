@@ -98,10 +98,28 @@ function Reply() {
     });
 }
 
+function VideoEditPage() {
+
+    editbutton = document.querySelector('.video-edit-page')
+    
+    editbutton.addEventListener('click', function() {
+        
+        var moduleId = likeButton.getAttribute("data-moduleid");
+        var videoId = likeButton.getAttribute("data-videoid");
+        var topicId = likeButton.getAttribute("data-topicid");
+
+        postRequest('/video-edit-page/', { moduleId: moduleId, videoId: videoId, topicId: topicId });
+    });
+}
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
     Video();
     Like();
     Check();
     Comment();
     Reply();
+    VideoEditPage();
+    
 });

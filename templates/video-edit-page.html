@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vídeo</title>
+    <link rel="stylesheet" href="{% static 'css/postar/new-topic-module-and-video.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index/header.css' %}">
+</head>
+<body>
+    {% include 'home/header.html' %}
+    <section>
+        <a class="like" data-moduleid="{{ module.id }}" data-videoid="{{ mainvideo.id }}" data-topicid="{{ module.topic.id }}"><i class="fa-regular fa-heart"></i>{{ likes.count }}</a>
+        <form method="POST" id="myForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+                <p>Editar Título do Vídeo</p>
+                <input type="text" placeholder="Título" required name="videotitle" value="{{mainvideo.title}}" id="titleInput">
+            </div>
+
+            <div>
+                <p>Editar Descrição do Vídeo</p>
+                <input type="text" placeholder="Descrição" required name="videodescription" value="{{mainvideo.description}}" id="descriptionInput">
+            </div>
+
+            <div>
+                <p>Editar Url do Vídeo</p>
+                <input type="text" placeholder="Url" required name="videourl" value="{{mainvideo.url}}" id="urlInput">
+            </div>
+            
+            <div>
+                <p>Editar Capa do Vídeo</p>
+                <input type="file" name="thumbnail" id="capaVideo">
+            </div>
+            <button type="submit">Salvar</button>
+        </form>
+    </section>
+    <script src="{% static 'js/video-edit.js' %}"></script>
+    <script src="{% static 'js/home.js' %}"></script>
+</body>
+</html>
