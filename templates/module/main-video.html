@@ -28,6 +28,8 @@
 
         <span><a class="fa-solid fa-arrow-left"></a><a class="fa-solid fa-arrow-right"></a></span>
         
-        <a class="video-edit-page" data-moduleid="{{ module.id }}" data-videoid="{{ mainvideo.id }}" data-topicid="{{ module.topic.id }}" >Editar Vídeo</a>
+        {% if request.user.is_staff %}
+            <a class="video-edit-page" data-moduleid="{{ module.id }}" data-videoid="{{ mainvideo.id }}" data-topicid="{{ module.topic.id }}" >Editar Vídeo</a>
+        {% endif %}
     </div>
 </div>

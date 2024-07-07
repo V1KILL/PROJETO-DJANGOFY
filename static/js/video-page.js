@@ -1,6 +1,7 @@
 var csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
 var likeButton = document.querySelector('.buttons a.like');
 var checkButton = document.querySelector('.buttons a.check');
+var likebutton2 = document.querySelector('section a.like')
 
 function postRequest(url, data) {
     var requestOptions = {
@@ -103,7 +104,6 @@ function VideoEditPage() {
     editbutton = document.querySelector('.video-edit-page')
     
     editbutton.addEventListener('click', function() {
-        
         var moduleId = likeButton.getAttribute("data-moduleid");
         var videoId = likeButton.getAttribute("data-videoid");
         var topicId = likeButton.getAttribute("data-topicid");
@@ -112,8 +112,6 @@ function VideoEditPage() {
     });
 }
 
-
-
 document.addEventListener('DOMContentLoaded', function() {
     Video();
     Like();
@@ -121,5 +119,5 @@ document.addEventListener('DOMContentLoaded', function() {
     Comment();
     Reply();
     VideoEditPage();
-    
+    Edit();
 });

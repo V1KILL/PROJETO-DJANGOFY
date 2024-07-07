@@ -16,24 +16,24 @@
             {% csrf_token %}
             <div>
                 <p>Editar Título do Vídeo</p>
-                <input type="text" placeholder="Título" required name="videotitle" value="{{mainvideo.title}}" id="titleInput">
+                <input type="text" placeholder="Título" required name="videotitle" value="{{mainvideo.title}}" id="title">
             </div>
 
             <div>
                 <p>Editar Descrição do Vídeo</p>
-                <input type="text" placeholder="Descrição" required name="videodescription" value="{{mainvideo.description}}" id="descriptionInput">
+                <input type="text" placeholder="Descrição" required name="videodescription" value="{{mainvideo.description}}" id="description">
             </div>
 
             <div>
                 <p>Editar Url do Vídeo</p>
-                <input type="text" placeholder="Url" required name="videourl" value="{{mainvideo.url}}" id="urlInput">
+                <input type="text" placeholder="Url" required name="videourl" value="{{mainvideo.url}}" id="url">
             </div>
             
             <div>
                 <p>Editar Capa do Vídeo</p>
-                <input type="file" name="thumbnail" id="capaVideo">
+                <input type="file" name="thumbnail" id="capa">
+                <a id="editbuttonconfirm">Salvar</a>
             </div>
-            <button type="submit">Salvar</button>
         </form>
     </section>
     <script src="{% static 'js/video-edit.js' %}"></script>

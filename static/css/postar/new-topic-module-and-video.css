@@ -67,16 +67,20 @@ option {
     background-color: transparent !important;
 }
 
-input[type=submit] {
+a#editbuttonconfirm {
     font-weight: 600;
     padding: 10px 30px;
     border-radius: 25px;
     border: 2px solid #44B78B;
     background-color: #44B78B;
     cursor: pointer;
+    color: white;
+    align-self: flex-end;
+    transition: 0.4s;
+    max-width: 200px;
 }
 
-input[type=submit]:hover {
+a#editbuttonconfirm:hover {
     color: black;
     border: 2px solid white;
     background-color: white;

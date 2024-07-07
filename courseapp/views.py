@@ -349,45 +349,39 @@ def ViewVideoEditPage(request):
     mainvideo = Video.objects.get(module=module, id=data.get('videoId'))
 
     user_profile = UserProfile.objects.get(user=request.user)
+        
     context = {
         'mainvideo':mainvideo,
         'user':user_profile,
+        'module':module,
+        
     }
     return render(request, 'video-edit-page.html', context)
 
-@csrf_exempt
-def ViewVideoEdit(request):
+def Edit(request):
     if request.method == 'POST':
-        print('Request received')
-        
         try:
-            topic_id = request.POST.get('topicId')
-            module_id = request.POST.get('moduleId')
-            video_id = request.POST.get('videoId')
-            print(f'topicId: {topic_id}, moduleId: {module_id}, videoId: {video_id}')
-
+            topic_id = request.POST['topicId']
+            module_id = request.POST['moduleId']
+            video_id = request.POST['videoId']
+            
             topic = Topic.objects.get(id=topic_id)
             module = Module.objects.get(topic=topic, id=module_id)
             mainvideo = Video.objects.get(module=module, id=video_id)
 
-            title = request.POST.get('title')
-            description = request.POST.get('description')
-            url = request.POST.get('url')
-            capa = request.FILES.get('capa')
+            mainvideo.title = request.POST['title']
+            mainvideo.description = request.POST['description']
+            mainvideo.url = request.POST['url']
 
-            print(f'title: {title}, description: {description}, url: {url}, capa: {capa}')
+            if request.FILES.get('capa'):
+                mainvideo.image = request.FILES.get('capa')
 
-            mainvideo.title = title
-            mainvideo.description = description
-            mainvideo.url = url
-
-            if capa:
-                mainvideo.capa = capa
             mainvideo.save()
 
-            print('Video updated successfully')
-            return JsonResponse({'success': True})
-        except Exception as e:
-            print(f'Error: {e}')
-            return JsonResponse({'success': False, 'error': str(e)})
-    return JsonResponse({'success': False, 'error': 'Invalid request method'})
+            return redirect('/')
+        except KeyError as e:
+            return render(request, 'error.html', {'message': f'KeyError: {e}'})
+
+            
+
+    
