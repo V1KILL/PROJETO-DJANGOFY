@@ -37,6 +37,8 @@ urlpatterns = [
     path('cancel/', CancelView.as_view(), name='cancel'),
 
     path('success/', SuccessView.as_view(), name='success'),
+   
+    
 ]
 
 

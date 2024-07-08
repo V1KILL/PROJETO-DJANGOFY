@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, auth
@@ -12,6 +12,10 @@ import stripe
 import json
 from typing import Any
 
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+
+
 @login_required(login_url='signin')
 def ViewHome(request):
     topics = Topic.objects.all()
@@ -21,6 +25,7 @@ def ViewHome(request):
         'topics':topics,
         'modules':modules,
         'user':user,
+        
     }
     return render(request, 'home/home.html', context)
 
@@ -213,32 +218,29 @@ class CancelView(TemplateView):
     
 class CreateCheckoutSessionView(View):
     def post(self, request, *args, **kwargs):
-        
-        
-        YOUR_DOMAIN = 'http://127.0.0.1:8000'
-        checkout_session = stripe.checkout.Session.create(
-            line_items=[
-                {
-                   'price_data': {
-                        'currency':'brl',
-                        'unit_amount':1000,
-                        'product_data': {
-                            'name':'Curso Premium',
-                        }
-                   },
-                    
-                    'quantity': 1,
-                },
-            ],
-            
-            mode='payment',
-            success_url=YOUR_DOMAIN + '/success',
-            cancel_url=YOUR_DOMAIN + '/cancel',
-        )
-        return JsonResponse({
-            'id':checkout_session.id
-        }
-        )
+        try:
+            YOUR_DOMAIN = 'http://127.0.0.1:8000'
+            checkout_session = stripe.checkout.Session.create(
+                line_items=[
+                    {
+                        'price_data': {
+                            'currency': 'brl',
+                            'unit_amount': 1000,
+                            'product_data': {
+                                'name': 'Curso Premium',
+                            }
+                        },
+                        'quantity': 1,
+                    },
+                ],
+                mode='payment',
+                success_url=f"{YOUR_DOMAIN}/success",
+                cancel_url=f"{YOUR_DOMAIN}/cancel",
+            )
+            return JsonResponse({'id': checkout_session.id})
+        except Exception as e:
+            return JsonResponse({'error': str(e)})
+
 
 @csrf_exempt
 @login_required

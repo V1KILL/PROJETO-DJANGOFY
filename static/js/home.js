@@ -131,3 +131,23 @@ logout.addEventListener('click', function () {
         console.error('erro meu amigo', error)
       })
 })
+
+
+var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+document.querySelector("button .checkout").addEventListener("click", function () {
+    var csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
+    alert("fefef")
+    fetch("{% url 'create-checkout-session' %}", {
+        method: "POST",
+        headers: { 'X-CSRFToken': csrfToken }
+    })
+    .then(response => response.json())
+    .then(session => stripe.redirectToCheckout({ sessionId: session.id }))
+    .then(result => {
+        if (result.error) {
+            alert(result.error.message);
+        }
+    })
+    .catch(error => console.error("Error:", error));
+});
+    // Create an instance of the Stripe object with your publishable API key

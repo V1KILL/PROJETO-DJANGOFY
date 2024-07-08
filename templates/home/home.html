@@ -13,11 +13,14 @@
 <body>
     {% include 'home/header.html' %}
     {% include 'home/modules.html' %}
-    
+    {% csrf_token %}
+    <a id="checkout-button" class="checkout">Checkout</a>
     <script src="{% static 'js/home.js' %}"></script>
     <script src="https://kit.fontawesome.com/c99caadda1.js" crossorigin="anonymous"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
     <script src="https://js.stripe.com/v3/"></script>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+    <script src="https://js.stripe.com/v3/"></script>
 </body>
 </html>
