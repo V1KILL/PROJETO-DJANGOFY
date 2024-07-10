@@ -14,13 +14,106 @@
     {% include 'home/header.html' %}
     {% include 'home/modules.html' %}
     {% csrf_token %}
-    <a id="checkout-button" class="checkout">Checkout</a>
+    
     <script src="{% static 'js/home.js' %}"></script>
     <script src="https://kit.fontawesome.com/c99caadda1.js" crossorigin="anonymous"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
     <script src="https://js.stripe.com/v3/"></script>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
-    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    // Create an instance of the Stripe object with your publishable API key
+    var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+    var checkoutButton = document.getElementById("stripebutton");
+    checkoutButton.addEventListener("click", function () {
+      fetch("{% url 'create-checkout-session' %}", {
+        method: "POST",
+        headers: {
+            'X-CSRFToken': csrftoken
+        }
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (session) {
+          return stripe.redirectToCheckout({ sessionId: session.id });
+        })
+        .then(function (result) {
+          // If redirectToCheckout fails due to a browser or network
+          // error, you should display the localized error message to your
+          // customer using error.message.
+          if (result.error) {
+            alert(result.error.message);
+          }
+        })
+        .catch(function (error) {
+          console.error("Error:", error);
+        });
+    });
+    document.querySelectorAll('.module').forEach(module => { module.addEventListener('click', function() {
+
+    var moduleId = this.dataset.id;
+    var valuemodule = this.id
+    var url = this.dataset.url
+
+    if (valuemodule == 'stripebutton') {
+      var csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
+      var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+
+      fetch(url, {
+        method: "POST",
+        headers: {
+          'X-CSRFToken': csrfToken
+        }
+      })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (session) {
+        return stripe.redirectToCheckout({ sessionId: session.id });
+      })
+      .then(function (result) {
+        // If redirectToCheckout fails due to a browser or network
+        // error, you should display the localized error message to your
+        // customer using error.message.
+        if (result.error) {
+          alert(result.error.message);
+        }
+      })
+      .catch(function (error) {
+        console.error("Error:", error);
+      });
+
+    } else {
+      var csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
+
+      var requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrfToken,
+        },
+        body: JSON.stringify({ moduleId: moduleId })
+      };
+
+      fetch('/module/', requestOptions)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error Then');
+        }
+        return response.text();
+      })
+      .then(html => {
+        document.open();
+        document.write(html);
+        document.close();
+      })
+      .catch(error => {
+        console.error('Error', error);
+      });
+    }
+  });
+});
+    </script>
 </body>
 </html>

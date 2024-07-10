@@ -118,9 +118,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-
-STRIPE_PUBLIC_KEY = ''
-STRIPE_SECRET_KEY = ''
+load_dotenv()
+# Agora você pode acessar suas variáveis de ambiente usando os métodos do Python
+STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
 
 
 STATIC_URL = 'static/'

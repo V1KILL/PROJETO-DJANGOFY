@@ -25,23 +25,55 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.querySelectorAll('.module').forEach(module => {
   module.addEventListener('click', function() {
-    
+
     var moduleId = this.dataset.id;
-    var csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
+    var valuemodule = this.id
+    var url = this.dataset.url
 
-    var requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrfToken,
-      },
-      body: JSON.stringify({ moduleId: moduleId })
-    };
+    if (valuemodule == 'stripebutton') {
+      var csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
+      var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
 
-    fetch('/module/', requestOptions) 
+      fetch(url, {
+        method: "POST",
+        headers: {
+          'X-CSRFToken': csrfToken
+        }
+      })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (session) {
+        return stripe.redirectToCheckout({ sessionId: session.id });
+      })
+      .then(function (result) {
+        // If redirectToCheckout fails due to a browser or network
+        // error, you should display the localized error message to your
+        // customer using error.message.
+        if (result.error) {
+          alert(result.error.message);
+        }
+      })
+      .catch(function (error) {
+        console.error("Error:", error);
+      });
+
+    } else {
+      var csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
+
+      var requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrfToken,
+        },
+        body: JSON.stringify({ moduleId: moduleId })
+      };
+
+      fetch('/module/', requestOptions)
       .then(response => {
         if (!response.ok) {
-          throw new ERROR('Error Then')
+          throw new Error('Error Then');
         }
         return response.text();
       })
@@ -51,8 +83,9 @@ document.querySelectorAll('.module').forEach(module => {
         document.close();
       })
       .catch(error => {
-        console.error('Erro', error);
+        console.error('Error', error);
       });
+    }
   });
 });
 
@@ -131,23 +164,4 @@ logout.addEventListener('click', function () {
         console.error('erro meu amigo', error)
       })
 })
-
-
-var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
-document.querySelector("button .checkout").addEventListener("click", function () {
-    var csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
-    alert("fefef")
-    fetch("{% url 'create-checkout-session' %}", {
-        method: "POST",
-        headers: { 'X-CSRFToken': csrfToken }
-    })
-    .then(response => response.json())
-    .then(session => stripe.redirectToCheckout({ sessionId: session.id }))
-    .then(result => {
-        if (result.error) {
-            alert(result.error.message);
-        }
-    })
-    .catch(error => console.error("Error:", error));
-});
     // Create an instance of the Stripe object with your publishable API key

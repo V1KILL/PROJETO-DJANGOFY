@@ -8,7 +8,7 @@
                     <ul class="splide__list">
                         {% for module in topic.topics.all %}
                         <li class="splide__slide">
-                            <div class="module" data-id='{{ module.id }}'  data-status="{{ module.status }}">
+                            <div class="module" data-id='{{ module.id }}' id="{% if user.status %}free{% else %}{% if module.status %}stripebutton{% else %}free{% endif %}{% endif %}" data-url="{% url 'create-checkout-session' %}">
                                 <div class="module-image">
 
                                     {% if user.status %}

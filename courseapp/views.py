@@ -25,7 +25,7 @@ def ViewHome(request):
         'topics':topics,
         'modules':modules,
         'user':user,
-        
+        'STRIPE_PUBLIC_KEY':settings.STRIPE_PUBLIC_KEY
     }
     return render(request, 'home/home.html', context)
 
@@ -218,28 +218,33 @@ class CancelView(TemplateView):
     
 class CreateCheckoutSessionView(View):
     def post(self, request, *args, **kwargs):
-        try:
-            YOUR_DOMAIN = 'http://127.0.0.1:8000'
-            checkout_session = stripe.checkout.Session.create(
-                line_items=[
-                    {
-                        'price_data': {
-                            'currency': 'brl',
-                            'unit_amount': 1000,
-                            'product_data': {
-                                'name': 'Curso Premium',
-                            }
-                        },
-                        'quantity': 1,
-                    },
-                ],
-                mode='payment',
-                success_url=f"{YOUR_DOMAIN}/success",
-                cancel_url=f"{YOUR_DOMAIN}/cancel",
-            )
-            return JsonResponse({'id': checkout_session.id})
-        except Exception as e:
-            return JsonResponse({'error': str(e)})
+        
+        YOUR_DOMAIN = 'http://127.0.0.1:8000'
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                   'price_data': {
+                        'currency':'brl',
+                        'unit_amount':1000,
+                        'product_data': {
+                            'name':'Curso',
+                        }
+                   },
+                    
+                    'quantity': 1,
+                },
+            ],
+            metadata={
+                "product_id": 10
+            },
+            mode='payment',
+            success_url=YOUR_DOMAIN + '/success',
+            cancel_url=YOUR_DOMAIN + '/cancel',
+        )
+        return JsonResponse({
+            'id':checkout_session.id
+        }
+        )
 
 
 @csrf_exempt
