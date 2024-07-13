@@ -1,7 +1,7 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import ViewHome, ViewPerfil, ViewRenderModule, ViewRenderVideo, CreateCheckoutSessionView, CancelView, SuccessView, ViewSignin, ViewSignup, ViewLogout, ViewLike, ViewCheck, ViewComment, ViewReply, ViewNewVideo, ViewNewTopicAndModule, ViewVideoEditPage, Edit
+from .views import ViewHome, ViewPerfil, ViewRenderModule, ViewRenderVideo, CreateCheckoutSessionView, CancelView, SuccessView, ViewSignin, ViewSignup, ViewLogout, ViewLike, ViewCheck, ViewComment, ViewReply, ViewNewVideo, ViewNewTopicAndModule, ViewVideoEditPage, Edit, StripeIntentView, stripe_webhook
 
 urlpatterns = [
     path('', ViewHome, name='home'),
@@ -33,10 +33,11 @@ urlpatterns = [
     path('edit/', Edit, name='edit'),
 
     path('create-checkout-session/', CreateCheckoutSessionView.as_view(), name='create-checkout-session'),
-
+    path('create-payment-intent/<pk>/', StripeIntentView.as_view(), name='create-payment-intent'),
+    path('webhooks/stripe/', stripe_webhook, name='stripe-webhook'),
     path('cancel/', CancelView.as_view(), name='cancel'),
 
-    path('success/', SuccessView.as_view(), name='success'),
+    path('success/', SuccessView, name='success'),
    
     
 ]

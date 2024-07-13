@@ -122,6 +122,7 @@ load_dotenv()
 # Agora você pode acessar suas variáveis de ambiente usando os métodos do Python
 STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
+STRIPE_WEBHOOK_SECRET ='http://127.0.0.1:8000/webhooks/stripe/'
 
 
 STATIC_URL = 'static/'

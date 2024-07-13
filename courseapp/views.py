@@ -210,42 +210,104 @@ def ViewCheck(request):
 
     return render(request, 'module/video-page.html', context)
 
-class SuccessView(TemplateView):
-    template_name = 'success.html'
+def SuccessView(request):
+    user = UserProfile.objects.get(user=request.user)
+    user.status = True
+    user.save()
+
+    return render(request, 'success.html')
 
 class CancelView(TemplateView):
     template_name = 'cancel.html'
-    
+
 class CreateCheckoutSessionView(View):
     def post(self, request, *args, **kwargs):
-        
         YOUR_DOMAIN = 'http://127.0.0.1:8000'
-        checkout_session = stripe.checkout.Session.create(
-            line_items=[
-                {
-                   'price_data': {
-                        'currency':'brl',
-                        'unit_amount':1000,
-                        'product_data': {
-                            'name':'Curso',
-                        }
-                   },
-                    
-                    'quantity': 1,
+        try:
+            checkout_session = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+                line_items=[
+                    {
+                        'price_data': {
+                            'currency': 'brl',
+                            'unit_amount': 1000,
+                            'product_data': {
+                                'name': 'Curso',
+                            },
+                        },
+                        'quantity': 1,
+                    },
+                ],
+                metadata={
+                    'user_id': str(request.user.id)
                 },
-            ],
-            metadata={
-                "product_id": 10
-            },
-            mode='payment',
-            success_url=YOUR_DOMAIN + '/success',
-            cancel_url=YOUR_DOMAIN + '/cancel',
-        )
-        return JsonResponse({
-            'id':checkout_session.id
-        }
-        )
+                mode='payment',
+                success_url=YOUR_DOMAIN + '/success',
+                cancel_url=YOUR_DOMAIN + '/cancel',
+            )
+            return JsonResponse({'id': checkout_session.id})
+        except Exception as e:
+            return JsonResponse({'error': str(e)})
 
+
+class StripeIntentView(View):
+    def post(self, request, *args, **kwargs):
+        try:
+            customer = stripe.Customer.create(
+                metadata={
+                    'user_id': str(request.user.id)
+                }
+            )
+
+            intent = stripe.PaymentIntent.create(
+                amount=1000,
+                currency='brl',
+                customer=customer.id,
+                metadata={
+                    'user_id': str(request.user.id)
+                }
+            )
+            return JsonResponse({'clientSecret': intent['client_secret']})
+        except Exception as e:
+            return JsonResponse({'error': str(e)})
+
+import logging
+logger = logging.getLogger(__name__)
+
+@csrf_exempt
+def stripe_webhook(request):
+    payload = request.body
+    sig_header = request.META.get('HTTP_STRIPE_SIGNATURE')
+    event = None
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, settings.STRIPE_WEBHOOK_SECRET
+        )
+    except ValueError as e:
+        logger.error(f"Invalid payload: {e}")
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError as e:
+        logger.error(f"Invalid signature: {e}")
+        return HttpResponse(status=400)
+
+    logger.info(f"Webhook received: {event}")
+
+    if event["type"] == "checkout.session.completed":
+        intent = event['data']['object']
+        user_id = intent['metadata']['user_id']
+        print(user_id)
+        logger.info(f"User ID from metadata: {user_id}")
+        if user_id:
+            try:
+                user = UserProfile.objects.get(id=int(user_id))
+                user.status = True
+                user.save()
+            except UserProfile.DoesNotExist:
+                logger.error(f"User with ID {user_id} does not exist")
+                pass  # Handle user not existing
+
+    return JsonResponse({'status': 'success'}, status=200)
 
 @csrf_exempt
 @login_required
