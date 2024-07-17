@@ -14,8 +14,6 @@ from typing import Any
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
-
-
 @login_required(login_url='signin')
 def ViewHome(request):
     topics = Topic.objects.all()
@@ -249,7 +247,6 @@ class CreateCheckoutSessionView(View):
         except Exception as e:
             return JsonResponse({'error': str(e)})
 
-
 class StripeIntentView(View):
     def post(self, request, *args, **kwargs):
         try:
@@ -273,7 +270,6 @@ class StripeIntentView(View):
 
 import logging
 logger = logging.getLogger(__name__)
-
 @csrf_exempt
 def stripe_webhook(request):
     payload = request.body
@@ -451,6 +447,35 @@ def Edit(request):
         except KeyError as e:
             return render(request, 'error.html', {'message': f'KeyError: {e}'})
 
-            
+@login_required(login_url='login')
+def ViewMudarNome(request):
+    if User.objects.filter(username=request.POST['name']).exists():
+        messages.error(request, 'Nome Existente')
+        return redirect('perfil')
+    else:
+        request.user.username = request.POST['name']
+        request.user.save()
+    messages.success(request, 'Nome Alterado Com Sucesso')
+    return redirect('perfil')
+
+@login_required(login_url='login')
+def ViewMudarSenha(request):
+    if request.method == 'POST':
+        password = request.POST.get('password')
+        request.user.set_password(password)
+        request.user.save()
+        update_session_auth_hash(request, request.user)
+    messages.success(request, 'Senha Alterada')
+    return redirect('perfil')
+
+@login_required(login_url='login')
+def ViewMudarPerfil(request):
+    if request.method == 'POST':
+        image = request.FILES['image']
+        user = UserProfile.objects.get(user=request.user)
+        user.profileimg = image
+        user.save()
+    messages.success(request, 'Imagem alterada')
+    return redirect('perfil')           
 
     

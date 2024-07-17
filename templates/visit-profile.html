@@ -13,25 +13,38 @@
     <section>
         <article>
             <p>Informações</p>
-            <form action="">
-                <label for="name">Nome<input type="text" name="name" id="" value="{{request.user.username}}"></label>
-                <button type="submit">Salvar</button>
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <form method="POST">
+                {% csrf_token %}
+                <label for="name">Nome<input type="text" name="name" id="name" value="{{request.user.username}}"></label>
+                <button id="namesubmit">Salvar</button>
             </form>
         </article>
 
         <article>
             <p>Editar Senha</p>
-            <form action="">
-                <label for="password">Senha<input type="password" name="password" id=""></label>
-                <label for="password2">Confirmar Senha<input type="password" name="password2" id=""></label>
-                <button type="submit">Salvar</button>
+            <form method="POST" id="passwordForm">
+                {% csrf_token %}
+                <label for="password">Senha<input type="password" name="password" id="password"></label>
+                <label for="password2">Confirmar Senha<input type="password" name="password2" id="password2" ></label>
+                <button id="passwordsubmit" type="submit">Salvar</button>
             </form>
 
             <p>Foto de Perfil</p>
-            <form action="">
-                <label for="image"><input type="file" name="image"></label>
+            <form method="POST" id="imageForm" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="image"><input type="file" name="image" id="image"></label>
+                <button type="submit">Salvar</button>
             </form>
     </section>
     <script src="{% static 'js/home.js' %}"></script>
+    <script src="{% static 'js/visit-profile.js' %}"></script>
 </body>
 </html>
