@@ -442,7 +442,7 @@ def Edit(request):
                 mainvideo.image = request.FILES.get('capa')
 
             mainvideo.save()
-
+            messages.success(request, 'Video Alterado Com Sucesso')
             return redirect('/')
         except KeyError as e:
             return render(request, 'error.html', {'message': f'KeyError: {e}'})

@@ -12,6 +12,13 @@
 </head>
 <body>
     {% include 'home/header.html' %}
+    <div class="messages">
+      {% for message in messages %}
+          <div class="{{ message.tags }}">
+              {{ message }}
+          </div>
+      {% endfor %}
+    </div>
     {% include 'home/modules.html' %}
     {% csrf_token %}
     

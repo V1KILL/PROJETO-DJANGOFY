@@ -1,3 +1,13 @@
+.messages .error {
+    padding: 40px;
+    color: #d12;
+}
+
+.messages .success {
+    color: #44B78B;
+    padding: 40px;
+}
+
 .modules {
     display: flex;
     flex-wrap: wrap;

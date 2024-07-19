@@ -85,6 +85,17 @@ a#editbuttonconfirm:hover {
     border: 2px solid white;
     background-color: white;
 }
+input[type=submit] {
+    background-color: #44B78B;
+    border: 2px solid #44B78B;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #0F0F0F;
+    border: 2px solid grey;
+}
 
 optgroup {
     color: black;
