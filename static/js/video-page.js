@@ -112,10 +112,12 @@ function VideoEditPage() {
     });
 }
 
+
 document.addEventListener('DOMContentLoaded', function() {
     Video();
     Like();
     Check();
+    DeleteVideo();
     Comment();
     Reply();
     VideoEditPage();

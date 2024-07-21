@@ -1,7 +1,7 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import ViewHome, ViewPerfil, ViewRenderModule, ViewRenderVideo, CreateCheckoutSessionView, CancelView, SuccessView, ViewSignin, ViewSignup, ViewLogout, ViewLike, ViewCheck, ViewComment, ViewReply, ViewNewVideo, ViewNewTopicAndModule, ViewVideoEditPage, Edit, StripeIntentView, stripe_webhook,  ViewMudarNome, ViewMudarSenha, ViewMudarPerfil
+from .views import ViewHome, ViewPerfil, ViewRenderModule, ViewRenderVideo, CreateCheckoutSessionView, CancelView, SuccessView, ViewSignin, ViewSignup, ViewLogout, ViewLike, ViewCheck, ViewComment, ViewReply, ViewNewVideo, ViewNewTopicAndModule, ViewVideoEditPage, Edit, StripeIntentView, stripe_webhook,  ViewMudarNome, ViewMudarSenha, ViewMudarPerfil, ViewDeleteVideo, ViewDeleteModule, ViewDeleteTopic
 
 urlpatterns = [
     path('', ViewHome, name='home'),
@@ -42,7 +42,11 @@ urlpatterns = [
     path('mudar-nome/', ViewMudarNome, name='mudar-nome'),
 
     path('mudar-senha/', ViewMudarSenha, name='mudar-senha'),
-    path('mudar-imagem/', ViewMudarPerfil, name='mudar-imagem')
+    path('mudar-imagem/', ViewMudarPerfil, name='mudar-imagem'),
+    path('delete-video/', ViewDeleteVideo, name='delete-video'),
+    path('delete-module/', ViewDeleteModule, name='delete-module'),
+
+    path('delete-topic/<int:topicId>', ViewDeleteTopic, name='delete-topic')
    
     
 ]

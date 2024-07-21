@@ -2,7 +2,8 @@
     <article>
         {% csrf_token %}
         {% for topic in topics %}
-            <p class="module-text">{{topic.title}}</p>
+            <p class="module-text">{{topic.title}} {% if request.user.is_staff %}<a href="{% url 'delete-topic' topic.id %}"><i style="color: 
+            #d12; font-size: 0.8em;" class="fa-solid fa-trash"></i></a>{% endif %}</p>
             <div class="splide" role="group" aria-label="Splide Basic HTML Example">
                 <div class="splide__track">
                     <ul class="splide__list">
@@ -31,7 +32,7 @@
 
                                 <p class="module-title">{{module.title}}</p>
                                 <p class="module-description">{{module.description}}</p>
-                                <p class="chess">Djangofy.com Team</p>
+                                
                                 
                                 <div class="details">
                                     <div class="detail">

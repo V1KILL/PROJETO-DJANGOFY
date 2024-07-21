@@ -26,5 +26,35 @@
     <script src="{% static 'js/video-page.js' %}"></script>
     <script src="https://kit.fontawesome.com/c99caadda1.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
+    <script>
+        function DeleteVideo() {
+
+        deletebutton = document.querySelector('.delete-video')
+
+        deletebutton.addEventListener('click', function() {
+            var moduleId = likeButton.getAttribute("data-moduleid");
+            var videoId = likeButton.getAttribute("data-videoid");
+            var topicId = likeButton.getAttribute("data-topicid");
+
+            postRequest('/delete-video/', { moduleId: moduleId, videoId: videoId, topicId: topicId });
+        });
+        }
+
+        function DeleteModule() {
+
+        deletebutton = document.querySelector('.delete-module')
+
+        deletebutton.addEventListener('click', function() {
+            var moduleId = likeButton.getAttribute("data-moduleid");
+            var topicId = likeButton.getAttribute("data-topicid");
+
+            postRequest('/delete-module/', { moduleId: moduleId, topicId: topicId });
+        });
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            DeleteVideo();
+            DeleteModule();
+        });
+    </script>
 </body>
 </html>

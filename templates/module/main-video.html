@@ -26,10 +26,13 @@
             <a class="like" data-moduleid="{{ module.id }}" data-videoid="{{ mainvideo.id }}" data-topicid="{{ module.topic.id }}"><i class="fa-regular fa-heart"></i>{{ likes.count }}</a>
         {% endif %}
 
-        <span><a class="fa-solid fa-arrow-left"></a><a class="fa-solid fa-arrow-right"></a></span>
         
         {% if request.user.is_staff %}
             <a class="video-edit-page" data-moduleid="{{ module.id }}" data-videoid="{{ mainvideo.id }}" data-topicid="{{ module.topic.id }}" >Editar Vídeo</a>
+            
+            <a class="delete-video">Apagar Vídeo</a>
+
+            <a class="delete-module" data-moduleid="{{ module.id }}" data-topicid="{{ module.topic.id }}" >Apagar Módulo</a>
         {% endif %}
     </div>
 </div>

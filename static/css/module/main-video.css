@@ -3,6 +3,7 @@
     flex-direction: column;
     width: 100%;
 }
+
 .mainvideo {
     width: 100%;
 }
@@ -29,7 +30,7 @@
     border-radius: 8px;
     font-weight: 500;
     color: white;
-    padding: 8px;
+    padding: 10px;
     background-color: #3F3F3F;
 }
 
@@ -39,6 +40,7 @@ iframe {
 
 .buttons {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     padding-left: 30px;
     padding-bottom: 10px;
@@ -51,7 +53,7 @@ iframe {
     gap: 10px;
     text-decoration: none;
     color: white;
-    padding: 8px;
+    padding: 10px;
     font-weight: 600;
     border-radius: 8px;
     transition: .4s;
@@ -59,18 +61,6 @@ iframe {
 
 .buttons a:hover {
     transform: translateY(-3px);
-}
-
-.buttons span {
-    display: flex;
-    gap: 8px;
-    cursor: pointer;
-}
-
-.buttons span a {
-    background-color: #3F3F3F;
-    padding: 12px;
-
 }
 
 .buttons .like {

@@ -29,7 +29,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
     <script>
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-    // Create an instance of the Stripe object with your publishable API key
     var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
     var checkoutButton = document.getElementById("stripebutton");
     checkoutButton.addEventListener("click", function () {
@@ -46,9 +45,6 @@
           return stripe.redirectToCheckout({ sessionId: session.id });
         })
         .then(function (result) {
-          // If redirectToCheckout fails due to a browser or network
-          // error, you should display the localized error message to your
-          // customer using error.message.
           if (result.error) {
             alert(result.error.message);
           }
@@ -80,9 +76,7 @@
         return stripe.redirectToCheckout({ sessionId: session.id });
       })
       .then(function (result) {
-        // If redirectToCheckout fails due to a browser or network
-        // error, you should display the localized error message to your
-        // customer using error.message.
+        
         if (result.error) {
           alert(result.error.message);
         }

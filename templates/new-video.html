@@ -37,7 +37,7 @@
 
             <div>
                 <p>Selecionar Tópico<p>
-                <select name="topicoption" id="">
+                <select name="topicoption" id="" required>
                     {% for topic in topics %}
                         <option value="{{topic.title}}">{{topic.title}}</option>
                     {% endfor %}

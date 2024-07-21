@@ -478,4 +478,35 @@ def ViewMudarPerfil(request):
     messages.success(request, 'Imagem alterada')
     return redirect('perfil')           
 
+def ViewDeleteVideo(request):
+    data = json.loads(request.body.decode('utf-8'))
+
+    topic = Topic.objects.get(id=data.get('topicId'))
+    module = Module.objects.get(id=data.get('moduleId'), topic=topic)
+    video = Video.objects.get(id=data.get('videoId'), module=module)
+
+    video.delete()
     
+
+    messages.success(request, 'Vídeo Removido Com Sucesso') 
+    return redirect("/")
+
+def ViewDeleteModule(request):
+    data = json.loads(request.body.decode('utf-8'))
+
+    topic = Topic.objects.get(id=data.get('topicId'))
+    module = Module.objects.get(id=data.get('moduleId'), topic=topic)
+    
+
+    module.delete()
+    
+
+    messages.success(request, 'Módulo Removido Com Sucesso') 
+    return redirect("/")
+
+def ViewDeleteTopic(request, topicId):
+    topic = Topic.objects.get(id=topicId)
+    topic.delete()
+
+    messages.success(request, 'Tópico Removido Com Sucesso')
+    return redirect('/')
