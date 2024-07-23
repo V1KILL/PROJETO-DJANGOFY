@@ -5,7 +5,7 @@ User = get_user_model()
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    profileimg = models.ImageField(upload_to='profiles/', default='profiles/me.jpg')
+    profileimg = models.ImageField(upload_to='profiles/', default='profiles/blankperfil.jpg')
     status = models.BooleanField(default=False)
 
     def __str__(self):

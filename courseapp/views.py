@@ -392,15 +392,15 @@ def ViewNewVideo(request):
 
 @login_required
 def ViewNewTopicAndModule(request):
+    topics = Topic.objects.all()
     if request.method == 'POST':
-        
         topic = Topic.objects.create(title=request.POST["topictitle"])
         module = Module.objects.create(title=request.POST['moduletitle'], description= request.POST['moduledescription'], topic=topic, image=request.FILES.get('thumbnail'), status=request.POST['videoversion'])
         module.save()
         return redirect('home')
     
     user_profile = UserProfile.objects.get(user=request.user)
-    return render(request, 'new-topic-and-module.html', {'user':user_profile})
+    return render(request, 'new-topic-and-module.html', {'user':user_profile, 'topics':topics})
 
 @login_required
 def ViewVideoEditPage(request):
