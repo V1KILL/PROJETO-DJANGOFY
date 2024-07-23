@@ -11,7 +11,14 @@
 <body>
     {% include 'home/header.html' %}
     <section>
-        <form id="myFormTopic" method="POST" enctype="multipart/form-data">
+        <div class="messages">
+            {% for message in messages %}
+                <div class="{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <form id="myFormTopic" method="POST" action="/new-topic/">
             {% csrf_token %}
             <div>
                 <p>Tópico</p>
@@ -19,7 +26,7 @@
             </div>
 
             <div>
-                <input type="submit" value="Criar Vídeo" required>
+                <input type="submit" value="Criar Tópico" required>
             </div> 
 
         </form>
@@ -33,7 +40,8 @@
             
             <div>
                 <p>Selecionar Tópico</p>
-                <select name="videoversion">
+                <select id="topicselect" name="optiontopic">
+                    <option value="">Selecione um tópico</option>
                     {% for topic in topics %}
                         <option value="{{topic.title}}">{{topic.title}}</option>
                     {% endfor %}
@@ -47,6 +55,7 @@
                     <option value="True">Premium</option>
                 </select>
             </div>
+
             <div>
                 <p>Capa do Módulo</p>
                 <input type="file" name="thumbnail" required>

@@ -1,8 +1,7 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import ViewHome, ViewPerfil, ViewRenderModule, ViewRenderVideo, CreateCheckoutSessionView, CancelView, SuccessView, ViewSignin, ViewSignup, ViewLogout, ViewLike, ViewCheck, ViewComment, ViewReply, ViewNewVideo, ViewNewTopicAndModule, ViewVideoEditPage, Edit, StripeIntentView, stripe_webhook,  ViewMudarNome, ViewMudarSenha, ViewMudarPerfil, ViewDeleteVideo, ViewDeleteModule, ViewDeleteTopic
-
+from .views import ViewHome, ViewPerfil, ViewRenderModule, ViewRenderVideo, CreateCheckoutSessionView, CancelView, SuccessView, ViewSignin, ViewSignup, ViewLogout, ViewLike, ViewCheck, ViewComment, ViewReply, ViewNewVideo, ViewNewTopicAndModule, ViewVideoEditPage, Edit, StripeIntentView, stripe_webhook,  ViewMudarNome, ViewMudarSenha, ViewMudarPerfil, ViewDeleteVideo, ViewDeleteModule, ViewDeleteTopic, ViewNewTopic
 urlpatterns = [
     path('', ViewHome, name='home'),
 
@@ -29,6 +28,7 @@ urlpatterns = [
     path('new-video/', ViewNewVideo, name='new-video'),
 
     path('new-topic-and-module/', ViewNewTopicAndModule, name='new-topic-and-module'),
+    path('new-topic/', ViewNewTopic, name='new-topic'),
     path('video-edit-page/', ViewVideoEditPage, name='video-edit-page'),
     path('edit/', Edit, name='edit'),
 

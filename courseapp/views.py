@@ -394,14 +394,27 @@ def ViewNewVideo(request):
 def ViewNewTopicAndModule(request):
     topics = Topic.objects.all()
     if request.method == 'POST':
-        topic = Topic.objects.create(title=request.POST["topictitle"])
-        module = Module.objects.create(title=request.POST['moduletitle'], description= request.POST['moduledescription'], topic=topic, image=request.FILES.get('thumbnail'), status=request.POST['videoversion'])
-        module.save()
+        if request.POST['optiontopic']:
+            topic = Topic.objects.get(title = request.POST['optiontopic'])
+
+            module = Module.objects.create(title=request.POST['moduletitle'], description= request.POST['moduledescription'], topic=topic, image=request.FILES.get('thumbnail'), status=request.POST['videoversion'])
+            module.save()
+        else:
+            messages.error(request, 'Selecione um Tópico ou o Não Há Um Tópico Existente')
+            return redirect('new-topic-and-module')
         return redirect('home')
     
     user_profile = UserProfile.objects.get(user=request.user)
     return render(request, 'new-topic-and-module.html', {'user':user_profile, 'topics':topics})
 
+@login_required
+def ViewNewTopic(request):
+    if request.method == 'POST':
+        topic = Topic.objects.create(title=request.POST["topictitle"])
+        topic.save()
+        messages.success(request, 'Tópico Criado Com Sucesso')
+        return redirect('home')
+    
 @login_required
 def ViewVideoEditPage(request):
 
