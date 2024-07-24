@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vídeo</title>
+    <link rel="stylesheet" href="{% static 'css/postar/new-topic-module-and-video.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index/header.css' %}">
+</head>
+<body>
+    {% include 'home/header.html' %}
+    <section>
+        <a class="like" data-moduleid="{{ module.id }}" data-topicid="{{ module.topic.id }}"></a>
+        <form method="POST" id="myForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+                <p>Editar Título do Módulo</p>
+                <input type="text" placeholder="Título" required name="moduletitle" value="{{module.title}}" id="moduletitle">
+            </div>
+
+            <div>
+                <p>Editar Descrição do Módulo</p>
+                <input type="text" placeholder="Descrição" required name="moduledescription" value="{{module.description}}" id="moduledescription">
+            </div>
+
+            
+            
+            <div>
+                <p>Editar Capa do Módulo</p>
+                <input type="file" name="thumbnail" id="capa">
+                <a id="editbuttonconfirm">Salvar</a>
+            </div>
+        </form>
+    </section>
+    <script src="{% static 'js/edit-module.js' %}"></script>
+    <script src="{% static 'js/home.js' %}"></script>
+</body>
+</html>

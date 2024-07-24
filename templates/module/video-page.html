@@ -24,6 +24,7 @@
     </section>
     <script src="{% static 'js/home.js' %}"></script>
     <script src="{% static 'js/video-page.js' %}"></script>
+    
     <script src="https://kit.fontawesome.com/c99caadda1.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
     <script>
@@ -51,9 +52,23 @@
             postRequest('/delete-module/', { moduleId: moduleId, topicId: topicId });
         });
         }
+
+        function PageEditModule() {
+
+        editbutton = document.querySelector('.page-edit-module')
+
+        editbutton.addEventListener('click', function() {
+            var moduleId = likeButton.getAttribute("data-moduleid");
+            
+            var topicId = likeButton.getAttribute("data-topicid");
+
+            postRequest('/page-edit-module/', { moduleId: moduleId, topicId: topicId });
+        });
+        }
         document.addEventListener('DOMContentLoaded', function() {
             DeleteVideo();
             DeleteModule();
+            PageEditModule();
         });
     </script>
 </body>

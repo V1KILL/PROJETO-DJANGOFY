@@ -7,7 +7,7 @@
             <img src="{{user.profileimg.url}}" alt="">
             <div class="options">
                 {% if request.user.is_staff %}
-                <a style="background-color: transparent;"   id="new-topic-and-module" data-url="{% url 'new-topic-and-module' %}">Criar Tópico e Módulo</a>
+                <a style="background-color: transparent;"   id="new-topic-and-module" data-url="{% url 'new-topic-and-module' %}">Criar Tópico ou Módulo</a>
 
                 <a style="background-color: transparent;" id="new-video" data-url="{% url 'new-video' %}">Criar Vídeo</a>
                 {% endif %}

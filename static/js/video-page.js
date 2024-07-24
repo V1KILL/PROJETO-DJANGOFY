@@ -112,7 +112,6 @@ function VideoEditPage() {
     });
 }
 
-
 document.addEventListener('DOMContentLoaded', function() {
     Video();
     Like();
@@ -122,4 +121,5 @@ document.addEventListener('DOMContentLoaded', function() {
     Reply();
     VideoEditPage();
     Edit();
+    
 });

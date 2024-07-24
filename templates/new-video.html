@@ -46,7 +46,7 @@
 
             <div>
                 <p>Módulo</p>
-                <select name="moduleoption" id="">
+                <select name="moduleoption" id="" required>
                     {% for topic in topics %}
                         <optgroup label="{{topic.title}}">
                             {% for module in topic.topics.all %}

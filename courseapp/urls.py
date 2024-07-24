@@ -1,7 +1,7 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import ViewHome, ViewPerfil, ViewRenderModule, ViewRenderVideo, CreateCheckoutSessionView, CancelView, SuccessView, ViewSignin, ViewSignup, ViewLogout, ViewLike, ViewCheck, ViewComment, ViewReply, ViewNewVideo, ViewNewTopicAndModule, ViewVideoEditPage, Edit, StripeIntentView, stripe_webhook,  ViewMudarNome, ViewMudarSenha, ViewMudarPerfil, ViewDeleteVideo, ViewDeleteModule, ViewDeleteTopic, ViewNewTopic
+from .views import ViewHome, ViewPerfil, ViewRenderModule, ViewRenderVideo, CreateCheckoutSessionView, CancelView, SuccessView, ViewSignin, ViewSignup, ViewLogout, ViewLike, ViewCheck, ViewComment, ViewReply, ViewNewVideo, ViewNewTopicAndModule, ViewVideoEditPage, Edit, StripeIntentView, stripe_webhook,  ViewMudarNome, ViewMudarSenha, ViewMudarPerfil, ViewDeleteVideo, ViewDeleteModule, ViewDeleteTopic, ViewNewTopic, ViewPageEditModule, ViewEditModule
 urlpatterns = [
     path('', ViewHome, name='home'),
 
@@ -30,6 +30,12 @@ urlpatterns = [
     path('new-topic-and-module/', ViewNewTopicAndModule, name='new-topic-and-module'),
     path('new-topic/', ViewNewTopic, name='new-topic'),
     path('video-edit-page/', ViewVideoEditPage, name='video-edit-page'),
+    
+
+    path('page-edit-module/', ViewPageEditModule, name='page-edit-module'),
+    
+    path('edit-module/', ViewEditModule, name='edit-module'),
+
     path('edit/', Edit, name='edit'),
 
     path('create-checkout-session/', CreateCheckoutSessionView.as_view(), name='create-checkout-session'),

@@ -375,12 +375,15 @@ def ViewNewVideo(request):
     user_profile = UserProfile.objects.get(user=request.user)
 
     if request.method == 'POST':
-
-        topic = Topic.objects.get(title=request.POST['topicoption'])
-        module = Module.objects.get(topic=topic, title= request.POST['moduleoption'])
-        video = Video.objects.create(module=module, title=request.POST["videotitle"], description=request.POST['videodescription'], url=request.POST['videourl'],image=request.FILES.get('thumbnail'))
-        video.save()
-        return redirect('home')
+        if request.POST['topicoption'] and request.POST['moduleoption']:
+            topic = Topic.objects.get(title=request.POST['topicoption'])
+            module = Module.objects.get(topic=topic, title= request.POST['moduleoption'])
+            video = Video.objects.create(module=module, title=request.POST["videotitle"], description=request.POST['videodescription'], url=request.POST['videourl'],image=request.FILES.get('thumbnail'))
+            video.save()
+            return redirect('home')
+        else:
+            messages.error(request, 'Preencha os campos restantes')
+            return redirect('new-video')
     
     context = {
         'modules':modules,
@@ -458,7 +461,60 @@ def Edit(request):
             messages.success(request, 'Video Alterado Com Sucesso')
             return redirect('/')
         except KeyError as e:
-            return render(request, 'error.html', {'message': f'KeyError: {e}'})
+            return JsonResponse({'status': 'success'}, status=200)
+
+def ViewPageEditModule(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            topic_id = data.get('topicId')
+            module_id = data.get('moduleId')
+            print(module_id, 'aquiioiiiii')
+            
+            
+            topic = Topic.objects.get(id=topic_id)
+            module = Module.objects.get(topic=topic, id=module_id)
+          
+            return render(request, 'module/edit-module.html', {'module':module})
+        except KeyError as e:
+            return JsonResponse({'status': 'success'}, status=200)
+        
+def ViewEditModule(request):
+    if request.method == 'POST':
+        try:
+            # Extraindo dados do formulário
+            topic_id = request.POST.get('topicId')
+            module_id = request.POST.get('moduleId')
+            title = request.POST.get('title')
+            description = request.POST.get('description')
+
+            # Obtendo os objetos Topic e Module
+            topic = Topic.objects.get(id=topic_id)
+            module = Module.objects.get(topic=topic, id=module_id)
+
+            # Atualizando os atributos do módulo
+            module.title = title
+            module.description = description
+
+            # Verificando se um novo arquivo foi enviado
+            if 'capa' in request.FILES:
+                module.image = request.FILES['capa']
+
+            module.save()
+
+            # Enviando mensagem de sucesso
+            messages.success(request, "Alterado")
+            return redirect('/')
+        except Topic.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Topic not found'}, status=404)
+        except Module.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Module not found'}, status=404)
+        except KeyError as e:
+            return JsonResponse({'status': 'error', 'message': f'Missing key: {e}'}, status=400)
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
 
 @login_required(login_url='login')
 def ViewMudarNome(request):
