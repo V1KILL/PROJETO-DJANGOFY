@@ -84,6 +84,7 @@ def ViewRenderModule(request):
         data = json.loads(request.body.decode('utf-8'))
 
         module = Module.objects.get(id=data.get('moduleId'))
+        
         mainvideo = module.videos.first()
         like = Like.objects.filter(user=request.user, video=mainvideo).exists()
         check = Check.objects.filter(user=request.user, video=mainvideo)
@@ -102,8 +103,11 @@ def ViewRenderModule(request):
             'module': module,
             'user':user_profile,
         }
+
         return render(request, 'module/video-page.html', context)
+    
     else:
+
         return JsonResponse({'error': 'Método não permitido'}, status=405)
 
 @csrf_exempt
@@ -122,6 +126,7 @@ def ViewRenderVideo(request):
         like = Like.objects.filter(user=request.user, video=mainvideo)
         check = Check.objects.filter(user=request.user, 
         video=mainvideo)
+
         user_profile = UserProfile.objects.get(user=request.user)
         
         context = {
@@ -138,6 +143,7 @@ def ViewRenderVideo(request):
         return render(request, 'module/video-page.html', context)
     
     else:
+
         return JsonResponse({'error': 'Método não permitido'}, status=405)
 
 @login_required
@@ -208,6 +214,8 @@ def ViewCheck(request):
 
     return render(request, 'module/video-page.html', context)
 
+
+@login_required
 def SuccessView(request):
     user = UserProfile.objects.get(user=request.user)
     user.status = True
@@ -215,8 +223,11 @@ def SuccessView(request):
 
     return render(request, 'success.html')
 
-class CancelView(TemplateView):
-    template_name = 'cancel.html'
+
+@login_required
+def CancelView(request):
+    return render(request, 'cancel.html')
+
 
 class CreateCheckoutSessionView(View):
     def post(self, request, *args, **kwargs):
@@ -246,6 +257,7 @@ class CreateCheckoutSessionView(View):
             return JsonResponse({'id': checkout_session.id})
         except Exception as e:
             return JsonResponse({'error': str(e)})
+
 
 class StripeIntentView(View):
     def post(self, request, *args, **kwargs):
@@ -301,11 +313,11 @@ def stripe_webhook(request):
                 user.save()
             except UserProfile.DoesNotExist:
                 logger.error(f"User with ID {user_id} does not exist")
-                pass  # Handle user not existing
+                pass
 
     return JsonResponse({'status': 'success'}, status=200)
 
-@csrf_exempt
+
 @login_required
 def ViewComment(request):
     data = json.loads(request.body.decode('utf-8'))
@@ -322,6 +334,7 @@ def ViewComment(request):
     user_profile = UserProfile.objects.get(user=request.user)
     
     comentario = Comment.objects.create(user= user_profile, text=data.get('comentario'), video=mainvideo)
+
     comentario.save()
 
     context = {
@@ -334,6 +347,7 @@ def ViewComment(request):
         'comments': comments,
         'user':user_profile,
     }
+
     return render(request, 'module/video-page.html', context)
 
 @login_required
@@ -344,8 +358,8 @@ def ViewReply(request):
     module = Module.objects.get(topic=topic, id=data.get('moduleId'))
     mainvideo = Video.objects.get(module=module, id=data.get('videoId'))
     user_profile = UserProfile.objects.get(user=request.user)
-
     comentario = Comment.objects.get(video=mainvideo, id=data.get('comentarioId'))
+
     response = Comment.objects.create(video=mainvideo, text=data.get("comentario"), user=user_profile, response=comentario)
     response.save()
     
@@ -376,12 +390,19 @@ def ViewNewVideo(request):
 
     if request.method == 'POST':
         if request.POST['topicoption'] and request.POST['moduleoption']:
+
             topic = Topic.objects.get(title=request.POST['topicoption'])
             module = Module.objects.get(topic=topic, title= request.POST['moduleoption'])
+
             video = Video.objects.create(module=module, title=request.POST["videotitle"], description=request.POST['videodescription'], url=request.POST['videourl'],image=request.FILES.get('thumbnail'))
+
             video.save()
+
+            messages.success(request, 'Vídeo Criado Com Sucesso')
             return redirect('home')
+        
         else:
+
             messages.error(request, 'Preencha os campos restantes')
             return redirect('new-video')
     
@@ -397,36 +418,49 @@ def ViewNewVideo(request):
 def ViewNewTopicAndModule(request):
     topics = Topic.objects.all()
     if request.method == 'POST':
+
         if request.POST['optiontopic']:
+
             topic = Topic.objects.get(title = request.POST['optiontopic'])
 
             module = Module.objects.create(title=request.POST['moduletitle'], description= request.POST['moduledescription'], topic=topic, image=request.FILES.get('thumbnail'), status=request.POST['videoversion'])
+
             module.save()
-        else:
-            messages.error(request, 'Selecione um Tópico ou o Não Há Um Tópico Existente')
+
+            messages.success(request, f'Módulo "{request.POST['moduletitle']}" Criado Com Sucesso')
             return redirect('new-topic-and-module')
-        return redirect('home')
+        
+        else:
+
+            messages.error(request, 'Selecione um Tópico ou Não Há Um Tópico Existente')
+            return redirect('new-topic-and-module')
     
     user_profile = UserProfile.objects.get(user=request.user)
+
     return render(request, 'new-topic-and-module.html', {'user':user_profile, 'topics':topics})
 
 @login_required
 def ViewNewTopic(request):
     if request.method == 'POST':
+        
+        topic = Topic.objects.filter(title=request.POST["topictitle"]).exists()
+
+        if topic:
+            messages.success(request, f'Tópico "{request.POST['topictitle']}" Já Existe')
+            return redirect('new-topic-and-module')
+        
         topic = Topic.objects.create(title=request.POST["topictitle"])
         topic.save()
-        messages.success(request, 'Tópico Criado Com Sucesso')
-        return redirect('home')
+
+        messages.success(request, f'Tópico "{topic.title}" Criado Com Sucesso')
+        return redirect('new-topic-and-module')    
     
 @login_required
 def ViewVideoEditPage(request):
-
     data = json.loads(request.body.decode('utf-8'))
 
     topic = Topic.objects.get(id=data.get('topicId'))
-    
     module = Module.objects.get(topic=topic, id=data.get('moduleId'))
-
     mainvideo = Video.objects.get(module=module, id=data.get('videoId'))
 
     user_profile = UserProfile.objects.get(user=request.user)
@@ -435,13 +469,15 @@ def ViewVideoEditPage(request):
         'mainvideo':mainvideo,
         'user':user_profile,
         'module':module,
-        
     }
+
     return render(request, 'video-edit-page.html', context)
 
+@login_required
 def Edit(request):
     if request.method == 'POST':
         try:
+
             topic_id = request.POST['topicId']
             module_id = request.POST['moduleId']
             video_id = request.POST['videoId']
@@ -458,53 +494,57 @@ def Edit(request):
                 mainvideo.image = request.FILES.get('capa')
 
             mainvideo.save()
+
             messages.success(request, 'Video Alterado Com Sucesso')
             return redirect('/')
         except KeyError as e:
+
             return JsonResponse({'status': 'success'}, status=200)
 
+@login_required
 def ViewPageEditModule(request):
     if request.method == 'POST':
         try:
+
             data = json.loads(request.body.decode('utf-8'))
+
             topic_id = data.get('topicId')
             module_id = data.get('moduleId')
-            print(module_id, 'aquiioiiiii')
-            
             
             topic = Topic.objects.get(id=topic_id)
             module = Module.objects.get(topic=topic, id=module_id)
           
             return render(request, 'module/edit-module.html', {'module':module})
+        
         except KeyError as e:
+
             return JsonResponse({'status': 'success'}, status=200)
         
+@login_required
 def ViewEditModule(request):
     if request.method == 'POST':
         try:
-            # Extraindo dados do formulário
+            
             topic_id = request.POST.get('topicId')
             module_id = request.POST.get('moduleId')
+
             title = request.POST.get('title')
             description = request.POST.get('description')
 
-            # Obtendo os objetos Topic e Module
             topic = Topic.objects.get(id=topic_id)
             module = Module.objects.get(topic=topic, id=module_id)
 
-            # Atualizando os atributos do módulo
             module.title = title
             module.description = description
 
-            # Verificando se um novo arquivo foi enviado
             if 'capa' in request.FILES:
                 module.image = request.FILES['capa']
 
             module.save()
 
-            # Enviando mensagem de sucesso
-            messages.success(request, "Alterado")
+            messages.success(request, "Módulo Editado Com Sucesso")
             return redirect('/')
+        
         except Topic.DoesNotExist:
             return JsonResponse({'status': 'error', 'message': 'Topic not found'}, status=404)
         except Module.DoesNotExist:
@@ -514,66 +554,80 @@ def ViewEditModule(request):
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
     else:
+        
         return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
 
 @login_required(login_url='login')
 def ViewMudarNome(request):
+
     if User.objects.filter(username=request.POST['name']).exists():
+
         messages.error(request, 'Nome Existente')
         return redirect('perfil')
+    
     else:
+
         request.user.username = request.POST['name']
         request.user.save()
+
     messages.success(request, 'Nome Alterado Com Sucesso')
     return redirect('perfil')
 
 @login_required(login_url='login')
 def ViewMudarSenha(request):
     if request.method == 'POST':
+
         password = request.POST.get('password')
         request.user.set_password(password)
+
         request.user.save()
         update_session_auth_hash(request, request.user)
+
     messages.success(request, 'Senha Alterada')
     return redirect('perfil')
 
 @login_required(login_url='login')
 def ViewMudarPerfil(request):
+
     if request.method == 'POST':
+
         image = request.FILES['image']
+
         user = UserProfile.objects.get(user=request.user)
         user.profileimg = image
         user.save()
+
     messages.success(request, 'Imagem alterada')
     return redirect('perfil')           
 
+@login_required
 def ViewDeleteVideo(request):
+
     data = json.loads(request.body.decode('utf-8'))
 
     topic = Topic.objects.get(id=data.get('topicId'))
     module = Module.objects.get(id=data.get('moduleId'), topic=topic)
     video = Video.objects.get(id=data.get('videoId'), module=module)
-
     video.delete()
-    
 
     messages.success(request, 'Vídeo Removido Com Sucesso') 
     return redirect("/")
 
+@login_required
 def ViewDeleteModule(request):
+
     data = json.loads(request.body.decode('utf-8'))
 
     topic = Topic.objects.get(id=data.get('topicId'))
     module = Module.objects.get(id=data.get('moduleId'), topic=topic)
-    
-
     module.delete()
-    
 
     messages.success(request, 'Módulo Removido Com Sucesso') 
     return redirect("/")
 
+@login_required
 def ViewDeleteTopic(request, topicId):
+
     topic = Topic.objects.get(id=topicId)
     topic.delete()
 

@@ -8,7 +8,7 @@
 }
 
 section {
-    height: 100dvw;
+    height: 100vh;
     padding: 40px;
     background-color: #0F0F0F;
 }
@@ -99,6 +99,10 @@ input[type=submit]:hover {
 
 optgroup {
     color: black;
+}
+
+.messages {
+    padding: 0;
 }
 
 .messages .error {

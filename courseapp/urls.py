@@ -41,7 +41,7 @@ urlpatterns = [
     path('create-checkout-session/', CreateCheckoutSessionView.as_view(), name='create-checkout-session'),
     path('create-payment-intent/<pk>/', StripeIntentView.as_view(), name='create-payment-intent'),
     path('webhooks/stripe/', stripe_webhook, name='stripe-webhook'),
-    path('cancel/', CancelView.as_view(), name='cancel'),
+    path('cancel/', CancelView, name='cancel'),
 
     path('success/', SuccessView, name='success'),
 

@@ -16,12 +16,12 @@
             {% csrf_token %}
             <div>
                 <p>Editar Título do Módulo</p>
-                <input type="text" placeholder="Título" required name="moduletitle" value="{{module.title}}" id="moduletitle">
+                <input type="text" placeholder="Título" name="moduletitle" value="{{module.title}}" id="moduletitle" required>
             </div>
 
             <div>
                 <p>Editar Descrição do Módulo</p>
-                <input type="text" placeholder="Descrição" required name="moduledescription" value="{{module.description}}" id="moduledescription">
+                <input type="text" placeholder="Descrição" name="moduledescription" value="{{module.description}}" id="moduledescription" required>
             </div>
 
             
