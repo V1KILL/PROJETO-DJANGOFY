@@ -20,11 +20,11 @@ With a beautiful design inspired by Abraham's course named "Editor Zen," you'll 
 
 ## NewVideo Layout
 
-![NewVideo Layout](../PROJETO-DJANGOFY/assetsreadme/coursefydetail.png)
+![NewVideo Layout](./assetsreadme/coursefydetail.png)
 
 ## NewTopic and NewModule Layout
 
-![NewTopic and NewModule Layout](../PROJETO-DJANGOFY/assetsreadme/coursefynewvideo.png)
+![NewTopic and NewModule Layout](./assetsreadme/coursefynewvideo.png)
 
 ## Conceptual Model
 
