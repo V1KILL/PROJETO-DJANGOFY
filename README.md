@@ -18,9 +18,13 @@ With a beautiful design inspired by Abraham's course named "Editor Zen," you'll 
 
 ![Home Layout](./assetsreadme/coursefydesktop.png)
 
+## Video Detail Layout
+
+![Video Detail](./assetsreadme/coursefydetail.png)
+
 ## NewVideo Layout
 
-![NewVideo Layout](./assetsreadme/coursefydetail.png)
+![NewVideo Layout](./assetsreadme/coursefynewvideo.png)
 
 ## NewTopic and NewModule Layout
 
