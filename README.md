@@ -28,7 +28,7 @@ With a beautiful design inspired by Abraham's course named "Editor Zen," you'll 
 
 ## NewTopic and NewModule Layout
 
-![NewTopic and NewModule Layout](./assetsreadme/courseynewvtopicandmodule.png)
+![NewTopic and NewModule Layout](./assetsreadme/courseynewtopicandmodule.png)
 
 ## Conceptual Model
 
