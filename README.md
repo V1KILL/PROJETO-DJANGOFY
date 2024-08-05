@@ -16,7 +16,7 @@ With a beautiful design inspired by Abraham's course named "Editor Zen," you'll 
 
 ## Home Layout
 
-![Home Layout](../PROJETO-DJANGOFY/assetsreadme/coursefydesktop.png)
+![Home Layout](./assetsreadme/coursefydesktop.png)
 
 ## NewVideo Layout
 
